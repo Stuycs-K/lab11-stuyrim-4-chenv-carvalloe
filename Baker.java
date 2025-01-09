@@ -4,22 +4,22 @@ public class Baker extends Adventurer{
 
   /*the other constructors ultimately call the constructor
   *with all parameters.*/
-  public CodeWarrior(String name, int hp, String language){
+  public Baker(String name, int hp, String language){
     super(name,hp);
     caffeineMax = 12;
     caffeine = caffeineMax/2;
     preferredLanguage = language;
   }
 
-  public CodeWarrior(String name, int hp){
+  public Baker(String name, int hp){
     this(name,hp,"c++");
   }
 
-  public CodeWarrior(String name){
+  public Baker(String name){
     this(name,24);
   }
 
-  public CodeWarrior(){
+  public Baker(){
     this("Carmack");
   }
 
