@@ -1,21 +1,20 @@
 public class Charcutier extends Adventurer{
-  int caffeine, caffeineMax;
+  int sausage, sausageMax;
 
   /*the other constructors ultimately call the constructor
   *with all parameters.*/
   public Charcutier(String name, int hp, String language){
     super(name,hp);
-    caffeineMax = 12;
-    caffeine = caffeineMax/2;
-    preferredLanguage = language;
+    sausageMax = 20;
+    sausage = sausageMax/2;
   }
 
   public Charcutier(String name, int hp){
-    this(name,hp,"c++");
+    this(name,hp);
   }
 
   public Charcutier(String name){
-    this(name,24);
+    this(name,20);
   }
 
   public Charcutier(){
@@ -24,19 +23,24 @@ public class Charcutier extends Adventurer{
 
   /*The next 8 methods are all required because they are abstract:*/
   public String getSpecialName(){
-    return "caffeine";
+    return "sausage";
   }
 
   public int getSpecial(){
-    return caffeine;
+    return sausage;
   }
 
   public void setSpecial(int n){
-    caffeine = n;
+    if() {
+      sausage = n;
+    }
+    else {
+      System.out.println("set special over the max");
+    }
   }
 
   public int getSpecialMax(){
-    return caffeineMax;
+    return sausageMax;
   }
 
   /*Deal 2-7 damage to opponent, restores 2 caffeine*/
