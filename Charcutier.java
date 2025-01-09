@@ -3,7 +3,7 @@ public class Charcutier extends Adventurer{
 
   /*the other constructors ultimately call the constructor
   *with all parameters.*/
-  public Charcutier(String name, int hp, String language){
+  public Charcutier(String name, int hp){
     super(name,hp);
     sausageMax = 20;
     sausage = sausageMax/2;
@@ -45,11 +45,6 @@ public class Charcutier extends Adventurer{
 
   /*Deal 2-7 damage to opponent, restores 2 caffeine*/
   public String attack(Adventurer other){
-    int damage = (int)(Math.random()*6)+2;
-    other.applyDamage(damage);
-    restoreSpecial(2);
-    return this + " attacked "+ other + " and dealt "+ damage +
-    " points of damage. They then take a sip of their coffee.";
   }
 
   /*Sausage Sling: Creates a barrage of sausages across the field,
@@ -77,14 +72,8 @@ public class Charcutier extends Adventurer{
   }
   /*Restores 5 special to other*/
   public String support(Adventurer other){
-    return "Gives a coffee to "+other+" and restores "
-    + other.restoreSpecial(5)+" "+other.getSpecialName();
   }
   /*Restores 6 special and 1 hp to self.*/
   public String support(){
-    int hp = 1;
-    setHP(getHP()+hp);
-    return this+" drinks a coffee to restores "+restoreSpecial(6)+" "
-    + getSpecialName()+ " and "+hp+" HP";
   }
 }
