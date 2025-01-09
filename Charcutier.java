@@ -1,6 +1,5 @@
 public class Charcutier extends Adventurer{
   int caffeine, caffeineMax;
-  String preferredLanguage;
 
   /*the other constructors ultimately call the constructor
   *with all parameters.*/
@@ -49,19 +48,26 @@ public class Charcutier extends Adventurer{
     " points of damage. They then take a sip of their coffee.";
   }
 
-  /*Deal 3-12 damage to opponent, only if caffeine is high enough.
-  *Reduces caffeine by 8.
+  /*Sausage Sling: Creates a barrage of sausages across the field,
+  reducing all players (opponent/ally) by x HP
+  (where x is a random number from 1-5). Uses 4 sausage.
   */
   public String specialAttack(Adventurer other){
-    if(getSpecial() >= 8){
-      setSpecial(getSpecial()-8);
-      int damage = (int)(Math.random()*5+Math.random()*5)+3;
+    if(getSpecial() >= 4){
+      setSpecial(getSpecial()-4);
+      int damage = (int)(Math.random()*3.5+Math.random()*3.5)+1;//
       other.applyDamage(damage);
-      return this + " used their "+preferredLanguage+
-      " skills to hack the matrix. "+
-      " This glitched out "+other+" dealing "+ damage +" points of damage.";
+      this.applyDamage(damage);
+      if(this.getHP() <= 0) {
+        this.setHP(0);
+        if(other.getHP() <= 0) {
+        return this + " lost their life to the cured meat barrage, taking " +other " with them.";
+      }
+      return this + " lost their life to the cured meat barrage."
+      }
+      return this + " used their sausages to launch a barrage. This dealt "+other+" and " + this + damage +" points of damage.";
     }else{
-      return "Not enough caffeine to use the ultimate code. Instead "+attack(other);
+      return "Not enough sausages to barrage friends and foes. Instead "+attack(other);
     }
 
   }
