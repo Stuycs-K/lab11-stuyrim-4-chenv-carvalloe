@@ -1,18 +1,15 @@
 public class Apprentice extends Adventurer{
-  int caffeine, caffeineMax;
-  String preferredLanguage;
-
+  int sauce, sauceMax;
   /*the other constructors ultimately call the constructor
   *with all parameters.*/
-  public Apprentice(String name, int hp, String language){
+  public Apprentice(String name, int hp){
     super(name,hp);
-    caffeineMax = 12;
-    caffeine = caffeineMax/2;
-    preferredLanguage = language;
+    sauceMax = 1;
+    sauce = 0;
   }
 
   public Apprentice(String name, int hp){
-    this(name,hp,"c++");
+    this(name,hp);
   }
 
   public Apprentice(String name){
@@ -25,24 +22,24 @@ public class Apprentice extends Adventurer{
 
   /*The next 8 methods are all required because they are abstract:*/
   public String getSpecialName(){
-    return "caffeine";
+    return "sauce";
   }
 
   public int getSpecial(){
-    return caffeine;
+    return sauce;
   }
 
   public void setSpecial(int n){
-    caffeine = n;
+    sauce = n;
   }
 
   public int getSpecialMax(){
-    return caffeineMax;
+    return sauceMax;
   }
 
   /*Deal 2-7 damage to opponent, restores 2 caffeine*/
   public String attack(Adventurer other){
-    int damage = (int)(Math.random()*6)+2;
+    int damage = (int)(Math.random()+2);
     other.applyDamage(damage);
     restoreSpecial(2);
     return this + " attacked "+ other + " and dealt "+ damage +
