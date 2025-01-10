@@ -44,39 +44,44 @@ public class Apprentice extends Adventurer{
 
   /*Deal 2-7 damage to opponent, restores 2 sauce*/
   public String attack(Adventurer other){
-    int damage = (int)(Math.random()+2);
+    int damage = (int)((Math.random()*2) + 1);
     other.applyDamage(damage);
-    restoreSpecial(2);
-    return this + " attacked "+ other + " and dealt "+ damage +
-    " points of damage. They then take a sip of their coffee.";
+    return "PREP WORK:" + this + " attacked "+ other + " and dealt "+ damage +
+    " points of damage.";
   }
 
   /*Deal 3-12 damage to opponent, only if sauce is high enough.
   *Reduces sauce by 8.
   */
   public String specialAttack(Adventurer other){
-    if(getSpecial() >= 8){
-      setSpecial(getSpecial()-8);
-      int damage = (int)(Math.random()*5+Math.random()*5)+3;
-      other.applyDamage(damage);
-      return this + " used their "+preferredLanguage+
-      " skills to hack the matrix. "+
-      " This glitched out "+other+" dealing "+ damage +" points of damage.";
-    }else{
+    if(getSpecial() >= 1){
+      int x = this.getHP();
+      this.setHP(other.getHP());
+      other.setHP(x);
+      return "RECIPE SWAP" + this + " swapped HP with "+ other.getName()+ ". " + this + "new HP is " + this.getHP() + ". " + other + "new HP is " + other.getHP();
+      }else{
       return "Not enough sauce to use the ultimate code. Instead "+attack(other);
     }
 
   }
-  /*Restores 5 special to other*/
   public String support(Adventurer other){
-    return "Gives a coffee to "+other+" and restores "
-    + other.restoreSpecial(5)+" "+other.getSpecialName();
+    int x = (int)((Math.random() * 4) + 1);
+    other.setHP(x);
+    return "LAST MINUTE FIX: gives sauce to "+other+" and restores HP to " + other.getHP();
   }
-  /*Restores 6 special and 1 hp to self.*/
+
   public String support(){
+    if (getHP() + 2 > 15)
+    {
+      setHP(15);
+      return "STOCK RELIEF: stock full";
+    }
+    else{
+
     int hp = 1;
     setHP(getHP()+hp);
     return this+" drinks a coffee to restores "+restoreSpecial(6)+" "
     + getSpecialName()+ " and "+hp+" HP";
+  }
   }
 }
