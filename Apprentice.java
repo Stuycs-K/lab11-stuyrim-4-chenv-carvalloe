@@ -6,7 +6,7 @@ public class Apprentice extends Adventurer{
   /*the other constructors ultimately call the constructor
   *with all parameters.*/
   public Apprentice(String name, int hp){
-    
+
     super(name,hp); //permission to go over maxHP??
     setmaxHP(15); //should we do this
     if(hp > 15) {
@@ -44,7 +44,7 @@ public class Apprentice extends Adventurer{
 
   /*Deal 2-7 damage to opponent, restores 2 sauce*/
   public String attack(Adventurer other){
-    int damage = (int)(Math.random()*6)+2;
+    int damage = (int)(Math.random()+2);
     other.applyDamage(damage);
     restoreSpecial(2);
     return this + " attacked "+ other + " and dealt "+ damage +
