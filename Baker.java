@@ -5,6 +5,10 @@ public class Baker extends Adventurer{
   *with all parameters.*/
   public Baker(String name, int hp){
     super(name,hp);
+    setmaxHP(30);
+    if(hp > 30) {
+      setHP(30);
+    }
     leavenerMax = 15;
     leavener = leavenerMax/2;
   }

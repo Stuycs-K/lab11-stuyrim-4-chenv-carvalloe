@@ -5,6 +5,10 @@ public class Boss extends Adventurer{
   *with all parameters.*/
   public Boss(String name, int hp){
     super(name,hp);
+    setmaxHP(40);
+    if(hp > 40) {
+
+    }
     saltMax = 12;
     salt = saltMax/2;
   }

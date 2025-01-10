@@ -10,6 +10,10 @@ public class Charcutier extends Adventurer{
   *with all parameters.*/
   public Charcutier(String name, int hp){
     super(name,hp);
+    setmaxHP(20);
+    if(hp > 20) {
+      setHP(20);
+    }
     sausageMax = 20;
     sausage = sausageMax/2;
   }
@@ -117,7 +121,7 @@ public class Charcutier extends Adventurer{
                 System.out.println("Invalid selection; you're trying to break the system! Please choose an int between 1 and 5.");
             }
         } else {
-            System.out.println("Invalid input; please enter an integer.");
+            System.out.println("Invalid input; please enter an int, not whatever was written.");
             scanner.next();
         }
     }
