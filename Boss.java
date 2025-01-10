@@ -1,43 +1,43 @@
 public class Boss extends Adventurer{
-  int caffeine, caffeineMax;
-  String preferredLanguage;
+  int salt, saltMax;
 
   /*the other constructors ultimately call the constructor
   *with all parameters.*/
-  public Boss(String name, int hp, String language){
-    super(name,hp);
-    caffeineMax = 12;
-    caffeine = caffeineMax/2;
-    preferredLanguage = language;
-  }
-
   public Boss(String name, int hp){
-    this(name,hp,"c++");
+    super(name,hp);
+    saltMax = 12;
+    salt = saltMax/2;
   }
 
-  public Bosse(String name){
-    this(name,24);
+
+  public Boss(String name){
+    this(name,40);
   }
 
   public Boss(){
-    this("Carmack");
+    this("GrillFiend");
   }
 
   /*The next 8 methods are all required because they are abstract:*/
   public String getSpecialName(){
-    return "caffeine";
+    return "salt";
   }
 
   public int getSpecial(){
-    return caffeine;
+    return salt;
   }
 
   public void setSpecial(int n){
-    caffeine = n;
+    if(n <= saltMax) {
+      salt = n;
+    }
+    else {
+      System.out.println("set special over the max");
+    }
   }
 
   public int getSpecialMax(){
-    return caffeineMax;
+    return saltMax;
   }
 
   /*Deal 2-7 damage to opponent, restores 2 caffeine*/
