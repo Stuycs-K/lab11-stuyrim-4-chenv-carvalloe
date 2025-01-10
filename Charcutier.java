@@ -1,16 +1,21 @@
+import java.util.Random;
+import java.util.Scanner;
+
 public class Charcutier extends Adventurer{
   int sausage, sausageMax;
 
+
+  //do we need a death message?
   /*the other constructors ultimately call the constructor
   *with all parameters.*/
   public Charcutier(String name, int hp){
     super(name,hp);
+    setmaxHP(20);
+    if(hp > 20) {
+      setHP(20);
+    }
     sausageMax = 20;
     sausage = sausageMax/2;
-  }
-
-  public Charcutier(String name, int hp){
-    this(name,hp);
   }
 
   public Charcutier(String name){
@@ -31,7 +36,7 @@ public class Charcutier extends Adventurer{
   }
 
   public void setSpecial(int n){
-    if() {
+    if(n <= sausageMax) {
       sausage = n;
     }
     else {
@@ -43,8 +48,35 @@ public class Charcutier extends Adventurer{
     return sausageMax;
   }
 
-  /*Deal 2-7 damage to opponent, restores 2 caffeine*/
+  /*
+  Unleashes a dark cloud of smoke to confuse the opponent. 
+  50-50 chance to cause 50% damage/3 HP points of damage to 
+  yourself or selected opponent, whichever is greater.
+  */
   public String attack(Adventurer other){
+    int random = (int)(Math.random()*2);
+    if(random == 0) {
+    if(other.getHP() <= 6) {
+      other.setHP(other.getHP()-3);
+      return "A dark cloud of smoke has confused " + other + "! " + "Dealt 3 HP points of damage to " + other;
+    }
+    else {
+      int k = other.getHP()-other.getHP()/2;
+      other.setHP(other.getHP()/2);
+      return "A dark cloud of smoke has confused " + other + "! " + k + " HP points of damage to " + other;
+    }
+  }
+  else {
+    if(this.getHP() <= 6) {
+      this.setHP(this.getHP()-3);
+      return "A dark cloud of smoke has confused " + this + "! Dealt 3 HP points of damage to " + this;
+    }
+    else {
+      int k = other.getHP()-other.getHP()/2;
+      other.setHP(other.getHP()/2);
+      return "A dark cloud of smoke has confused " + this + "! " + "Dealt " + k + " HP points of damage to " + this;
+    }
+  }
   }
 
   /*Sausage Sling: Creates a barrage of sausages across the field,
@@ -60,9 +92,9 @@ public class Charcutier extends Adventurer{
       if(this.getHP() <= 0) {
         this.setHP(0);
         if(other.getHP() <= 0) {
-        return this + " lost their life to the cured meat barrage, taking " +other " with them.";
+        return this + " lost their life to the cured meat barrage, taking " +other + " with them.";
       }
-      return this + " lost their life to the cured meat barrage."
+      return this + " lost their life to the cured meat barrage.";
       }
       return this + " used their sausages to launch a barrage. This dealt "+other+" and " + this + damage +" points of damage.";
     }else{
@@ -70,10 +102,81 @@ public class Charcutier extends Adventurer{
     }
 
   }
-  /*Restores 5 special to other*/
+  /*Cured Edge: Heals x HP points and x/2 
+  special points on a selected ally, 
+  where, if y=your selected number from 1-5, 
+  and z=random number from 1-5, x=(y)*(z/y+1), 
+  and integer division is used (up to maximums).*/
   public String support(Adventurer other){
+    Scanner scanner = new Scanner(System.in);
+    int y;
+    System.out.println("Please choose an int between 1 and 5:");
+    
+    while (true) {
+        if (scanner.hasNextInt()) {
+            y = scanner.nextInt();
+            if (y >= 1 && y <= 5) {
+                break;
+            } else {
+                System.out.println("Invalid selection; you're trying to break the system! Please choose an int between 1 and 5.");
+            }
+        } else {
+            System.out.println("Invalid input; please enter an int, not whatever was written.");
+            scanner.next();
+        }
+    }
+
+  Random random = new Random();
+  int z = random.nextInt(5) + 1;
+  int l = (z/y + 1);
+      int x = y*l;
+      int restoredHealth;
+      int restoredSpecial;
+      if(other.getHP() + x < other.getmaxHP()) {
+restoredHealth = x;
+      }
+      else {
+restoredHealth = other.getmaxHP()-other.getHP();
+      }
+      if(other.getSpecial() + x/2 < other.getSpecialMax()) {
+restoredSpecial = x/2;
+        }
+        else {
+ restoredSpecial = other.getSpecialMax()-other.getSpecial();
+        }
+      return "Cured Edge has restored " + restoredHealth + " HP points and " + restoredSpecial + 
+      " special points for " + other + "!";
   }
-  /*Restores 6 special and 1 hp to self.*/
+  
+  /*Marination: Randomly restores 20% of your 
+  special or your HP points (up to maximums).*/
   public String support(){
+    int k = (int) (Math.random()*2);
+    if(k == 1) {
+      int r = 2*this.getSpecialMax()/10;
+      if(r+this.getSpecial() < this.getSpecialMax()) {
+        this.setSpecial(this.getSpecial()+r);
+        return "" + this + "used Marination! Replenished " + r +" sausages!";
+      }
+      else {
+        int l = this.getSpecial();
+        this.setHP(this.getSpecialMax());
+
+        return "" + this + "used Marination! Replenished " + (this.getSpecialMax()-l) + " sausages!";
+      }
+    }
+    else {
+      int r = 2*this.getmaxHP()/10;
+      if(r+this.getHP() < this.getmaxHP()) {
+        this.setHP(this.getHP()+r);
+        return "" + this + "used Marination! Healed " + r + " HP points!";
+      }
+      else {
+        int l = this.getHP();
+        this.setHP(this.getmaxHP());
+
+        return "" + this + "used Marination! Healed " + (this.getmaxHP()-l) + " HP points!";
+      }
+    }
   }
 }

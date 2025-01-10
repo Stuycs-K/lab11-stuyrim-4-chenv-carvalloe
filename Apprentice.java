@@ -1,23 +1,28 @@
 public class Apprentice extends Adventurer{
   int sauce, sauceMax;
+
+  private String[] prepItems = new String[]{"coffee beans", "sliced cherry tomatoes", "sushi rice"};
+
   /*the other constructors ultimately call the constructor
   *with all parameters.*/
   public Apprentice(String name, int hp){
-    super(name,hp);
+
+    super(name,hp); //permission to go over maxHP??
+    setmaxHP(15); //should we do this
+    if(hp > 15) {
+      setHP(15);
+    }
     sauceMax = 1;
-    sauce = 0;
+    sauce = 1;
   }
 
-  public Apprentice(String name, int hp){
-    this(name,hp);
-  }
 
   public Apprentice(String name){
-    this(name,24);
+    this(name,15);
   }
 
-  public CodeWarrior(){
-    this("Carmack");
+  public Apprentice(){
+    this("Alice");
   }
 
   /*The next 8 methods are all required because they are abstract:*/
@@ -37,7 +42,7 @@ public class Apprentice extends Adventurer{
     return sauceMax;
   }
 
-  /*Deal 2-7 damage to opponent, restores 2 caffeine*/
+  /*Deal 2-7 damage to opponent, restores 2 sauce*/
   public String attack(Adventurer other){
     int damage = (int)(Math.random()+2);
     other.applyDamage(damage);
@@ -46,8 +51,8 @@ public class Apprentice extends Adventurer{
     " points of damage. They then take a sip of their coffee.";
   }
 
-  /*Deal 3-12 damage to opponent, only if caffeine is high enough.
-  *Reduces caffeine by 8.
+  /*Deal 3-12 damage to opponent, only if sauce is high enough.
+  *Reduces sauce by 8.
   */
   public String specialAttack(Adventurer other){
     if(getSpecial() >= 8){
@@ -58,7 +63,7 @@ public class Apprentice extends Adventurer{
       " skills to hack the matrix. "+
       " This glitched out "+other+" dealing "+ damage +" points of damage.";
     }else{
-      return "Not enough caffeine to use the ultimate code. Instead "+attack(other);
+      return "Not enough sauce to use the ultimate code. Instead "+attack(other);
     }
 
   }
