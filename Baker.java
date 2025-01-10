@@ -5,10 +5,7 @@ public class Baker extends Adventurer{
   *with all parameters.*/
   public Baker(String name, int hp){
     super(name,hp);
-    setmaxHP(30);
-    if(hp > 30) {
-      setHP(30);
-    }
+    setmaxHP(hp);
     leavenerMax = 15;
     leavener = leavenerMax/2;
   }
@@ -52,7 +49,7 @@ public class Baker extends Adventurer{
     return this + ", using a hot batter-filled cannon ball, attacked "+ other + " and dealt "+ 3 +
     " points of damage.";
 
-    
+
   }
   else {
     other.applyDamage(5);
@@ -60,7 +57,7 @@ public class Baker extends Adventurer{
     " points of damage. The impact was so strong it dealt another 2 points of damage.";
 
   }
-    
+
   }
 
   /*Rolling Pin: Reduces the opponent HP or special points by 40%, whichever is greater. Consumes 6 leavener.
@@ -71,14 +68,14 @@ public class Baker extends Adventurer{
     if(4*other.getHP()/10 > 4*other.getSpecial()/10) {
       int l = 4*other.getHP()/10;
       other.setHP(other.getHP()-4*other.getHP()/10);
-      return "" + this + " rolls away " + other + "'s HP by " + l 
+      return "" + this + " rolls away " + other + "'s HP by " + l
       + ", consuming 6 leavener in the process.";
     }
     else {
-      
+
       int l = 4*other.getSpecial()/10;
       other.setSpecial(other.getSpecial()-4*other.getSpecial()/10);
-      return "" + this + " rolls away " + other + "'s " + other.getSpecialName() + " by " + l 
+      return "" + this + " rolls away " + other + "'s " + other.getSpecialName() + " by " + l
       + ", consuming 6 leavener in the process.";
     }
   }

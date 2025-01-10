@@ -5,16 +5,51 @@ public class Game{
   private static final int BORDER_COLOR = Text.BLACK;
   private static final int BORDER_BACKGROUND = Text.WHITE + Text.BACKGROUND;
 
+    public static final String CLEAR_SCREEN = "\033[2J";
+
   public static void main(String[] args) {
     run();
   }
 
   //Display the borders of your screen that will not change.
   //Do not write over the blank areas where text will appear or parties will appear.
-  public static void drawBackground(){
-    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-    //YOUR CODE HERE
-    /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+  public static void drawBackground(){ //needs work; fix the extra line @ bottom
+    //NOTE: COPIED FROM 12-04-COLOR SCREEN W MODIFICATIONS
+    System.out.print(CLEAR_SCREEN); //is this fine?
+        go(0,0);
+        int wide = 80; //80 x 30 width
+        int len = 30; //80 x 30 length specificatin
+        color(background(BORDER_COLOR));
+
+        for(int i = 0; i < wide; i++){System.out.print(" ");
+
+        }
+
+        for(int j = 1; j < len; j++) {
+
+            System.out.println(" ");
+        }
+
+        color(background(BORDER_COLOR));
+        go(len, 0);
+         //PRINT REST
+         //for(int i = 2; i < wid; j++) {
+        for(int i = 0; i < wide; i++){
+            System.out.print(" ");
+        }
+
+        //for(int j = 1; j < len; j++) {
+        for(int j = 1; j <= len; j++) {
+
+            go(j, wide + 1);
+
+            System.out.println(" ");
+        }
+
+        go(31,1);
+        color(background(BORDER_BACKGROUND));
+        System.out.println(" ");
+    }
   }
 
   //Display a line of text starting at
