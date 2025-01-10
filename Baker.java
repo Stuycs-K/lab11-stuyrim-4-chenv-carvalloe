@@ -1,80 +1,105 @@
 public class Baker extends Adventurer{
-  int caffeine, caffeineMax;
-  String preferredLanguage;
+  int leavener, leavenerMax;
 
   /*the other constructors ultimately call the constructor
   *with all parameters.*/
-  public Baker(String name, int hp, String language){
+  public Baker(String name, int hp){
     super(name,hp);
-    caffeineMax = 12;
-    caffeine = caffeineMax/2;
-    preferredLanguage = language;
+    leavenerMax = 15;
+    leavener = leavenerMax/2;
   }
 
-  public Baker(String name, int hp){
-    this(name,hp,"c++");
-  }
 
   public Baker(String name){
-    this(name,24);
+    this(name,30);
   }
 
   public Baker(){
-    this("Carmack");
+    this("Bob");
   }
 
   /*The next 8 methods are all required because they are abstract:*/
   public String getSpecialName(){
-    return "caffeine";
+    return "leavener";
   }
 
   public int getSpecial(){
-    return caffeine;
+    return leavener;
   }
 
   public void setSpecial(int n){
-    caffeine = n;
+    if(n <= leavenerMax) {
+      leavener = n;
+    }
+    else {
+      System.out.println("set special over the max");
+    }
   }
 
   public int getSpecialMax(){
-    return caffeineMax;
+    return leavenerMax;
   }
 
-  /*Deal 2-7 damage to opponent, restores 2 caffeine*/
+  /*Deal 3/5 damage to opponent*/
   public String attack(Adventurer other){
-    int damage = (int)(Math.random()*6)+2;
-    other.applyDamage(damage);
-    restoreSpecial(2);
-    return this + " attacked "+ other + " and dealt "+ damage +
-    " points of damage. They then take a sip of their coffee.";
+    int x = (int)(Math.random()*5);
+    if(x!=0) {
+    other.applyDamage(3);
+    return this + ", using a hot batter-filled cannon ball, attacked "+ other + " and dealt "+ 3 +
+    " points of damage.";
+
+    
+  }
+  else {
+    other.applyDamage(5);
+    return this + ", using a hot batter-filled cannon ball, attacked "+ other + " and dealt "+ 3 +
+    " points of damage. The impact was so strong it dealt another 2 points of damage.";
+
+  }
+    
   }
 
-  /*Deal 3-12 damage to opponent, only if caffeine is high enough.
-  *Reduces caffeine by 8.
+  /*Rolling Pin: Reduces the opponent HP or special points by 40%, whichever is greater. Consumes 6 leavener.
   */
   public String specialAttack(Adventurer other){
-    if(getSpecial() >= 8){
-      setSpecial(getSpecial()-8);
-      int damage = (int)(Math.random()*5+Math.random()*5)+3;
-      other.applyDamage(damage);
-      return this + " used their "+preferredLanguage+
-      " skills to hack the matrix. "+
-      " This glitched out "+other+" dealing "+ damage +" points of damage.";
-    }else{
-      return "Not enough caffeine to use the ultimate code. Instead "+attack(other);
+    if(this.getSpecial()>=6) {
+      setSpecial(getSpecial()-6);
+    if(4*other.getHP()/10 > 4*other.getSpecial()/10) {
+      int l = 4*other.getHP()/10;
+      other.setHP(other.getHP()-4*other.getHP()/10);
+      return "" + this + " rolls away " + other + "'s HP by " + l 
+      + ", consuming 6 leavener in the process.";
+    }
+    else {
+      
+      int l = 4*other.getSpecial()/10;
+      other.setSpecial(other.getSpecial()-4*other.getSpecial()/10);
+      return "" + this + " rolls away " + other + "'s " + other.getSpecialName() + " by " + l 
+      + ", consuming 6 leavener in the process.";
+    }
+  }
+    else{
+      return "Not enough leavener to roll away your foes! Instead "+attack(other);
     }
 
   }
-  /*Restores 5 special to other*/
+  //TO BE WRITTEN/MODIFIED
   public String support(Adventurer other){
     return "Gives a coffee to "+other+" and restores "
     + other.restoreSpecial(5)+" "+other.getSpecialName();
   }
   /*Restores 6 special and 1 hp to self.*/
   public String support(){
-    int hp = 1;
-    setHP(getHP()+hp);
-    return this+" drinks a coffee to restores "+restoreSpecial(6)+" "
-    + getSpecialName()+ " and "+hp+" HP";
+    if(this.getSpecial()<12) {
+      this.setSpecial(this.getSpecial()+3);
+      return "" + this + " expertly gathers 3 more leaveners from the kitchen cupboard"
+      + ", leading to a total of " + this.getSpecial() + " leaveners.";
+    }
+    else {
+      int l = 15-this.getSpecial();
+      this.setSpecial(15);
+      return "" + this + " expertly gathers " + l+" more leaveners from the kitchen cupboard"
+      + ", leading to a total of " + this.getSpecial() + " leaveners.";
+    }
   }
 }
