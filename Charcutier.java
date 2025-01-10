@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.Scanner;
 
 public class Charcutier extends Adventurer{
   int sausage, sausageMax;
@@ -102,10 +103,24 @@ public class Charcutier extends Adventurer{
   where, if y=your selected number from 1-5, 
   and z=random number from 1-5, x=(y)*(z/y+1), 
   and integer division is used (up to maximums).*/
-  public String support(Adventurer other, int y){
-    if (y < 1 || y > 5) {
-      return "Invalid selection; you're trying to break the system! Please choose an int between 1 and 5.";
-  }
+  public String support(Adventurer other){
+    Scanner scanner = new Scanner(System.in);
+    int y;
+    System.out.println("Please choose an int between 1 and 5:");
+    
+    while (true) {
+        if (scanner.hasNextInt()) {
+            y = scanner.nextInt();
+            if (y >= 1 && y <= 5) {
+                break;
+            } else {
+                System.out.println("Invalid selection; you're trying to break the system! Please choose an int between 1 and 5.");
+            }
+        } else {
+            System.out.println("Invalid input; please enter an integer.");
+            scanner.next();
+        }
+    }
 
   Random random = new Random();
   int z = random.nextInt(5) + 1;
@@ -127,8 +142,6 @@ restoredSpecial = x/2;
         }
       return "Cured Edge has restored " + restoredHealth + " HP points and " + restoredSpecial + 
       " special points for " + other + "!";
-
-    
   }
   
   /*Marination: Randomly restores 20% of your 
