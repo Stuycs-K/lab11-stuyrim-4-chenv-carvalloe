@@ -2,6 +2,8 @@ import java.util.Random;
 public abstract class Adventurer{
   private String name;
   private int HP,maxHP;
+  private boolean supported;
+  private int supportTurns;
 
   //Abstract methods are meant to be implemented in child classes.
   /*
@@ -53,6 +55,17 @@ public abstract class Adventurer{
   */
 
   public void applyDamage(int amount){
+    if (supported)
+    {
+      int x = (int)(amount * 0.5);
+      SupportTurns--;
+      if (SupportTurns == 0)
+      {
+        Supported = false;
+        SupportTurns = 2;
+      }
+      
+    }
     this.HP -= amount;
   }
 
