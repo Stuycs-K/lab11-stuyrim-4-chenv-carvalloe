@@ -4,7 +4,6 @@ public class Baker extends Adventurer{
   /*the other constructors ultimately call the constructor
   *with all parameters.*/
   public Baker(String name, int hp){
-    super(supported, supportTurns);
     super(name,hp);
     setmaxHP(hp);
     leavenerMax = 15;
@@ -91,14 +90,19 @@ public class Baker extends Adventurer{
     return "Gives a coffee to "+other+" and restores "
     + other.restoreSpecial(5)+" "+other.getSpecialName();
   }
+
   public String support(){
     if (getSpecial() + 3 >= 15)
     {
+      int s = 15-getSpecial();
       setSpecial(15);
+
+      return "Using the enthusiasm of a sugar rush, " + this + " restores " + s+  " leaveners.";
     }
     else
     {
       setSpecial(getSpecial() + 3);
+      return "Using the enthusiasm of a sugar rush, " + this + " restores 3 leaveners.";
+    }
     }
        }
-  }

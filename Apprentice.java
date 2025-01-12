@@ -77,8 +77,8 @@ public class Apprentice extends Adventurer{
       return "STOCK RELIEF: stock full";
     }
     else{
-    setHP(getHP()+hp);
-    return this+" STOCK RELIEF: "+hp+" HP";
+    setHP(getHP()+this.getHP());
+    return this+" STOCK RELIEF: "+this.getHP()+" HP";
   }
   }
 }

@@ -7,7 +7,7 @@ public class Boss extends Adventurer{
     super(name,hp);
     setmaxHP(40);
     if(hp > 40) {
-
+      setHP(40);
     }
     saltMax = 12;
     salt = saltMax/2;

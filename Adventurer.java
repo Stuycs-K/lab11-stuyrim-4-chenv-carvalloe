@@ -58,11 +58,11 @@ public abstract class Adventurer{
     if (supported)
     {
       int x = (int)(amount * 0.5);
-      SupportTurns--;
-      if (SupportTurns == 0)
+      supportTurns--;
+      if (supportTurns == 0)
       {
-        Supported = false;
-        SupportTurns = 2;
+        supported = false;
+        supportTurns = 2;
       }
       
     }
@@ -72,6 +72,7 @@ public abstract class Adventurer{
   //You did it wrong if this happens.
   public Adventurer(){
     this("Lester-the-noArg-constructor-string");
+    supportTurns= 2;
   }
 
   public Adventurer(String name){
@@ -84,7 +85,7 @@ public abstract class Adventurer{
     this.name = name;
     this.HP = hp;
     this.maxHP = hp;
-    Supported = false;
+    supported = false;
     supportTurns= 2;
   }
 
