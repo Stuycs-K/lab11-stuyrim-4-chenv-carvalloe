@@ -54,7 +54,7 @@ public class Apprentice extends Adventurer{
   *Reduces sauce by 8.
   */
   public String specialAttack(Adventurer other){
-    if(getSpecial() >= 1){
+    if(getSpecial() == 1){
       int x = this.getHP();
       this.setHP(other.getHP());
       other.setHP(x);
@@ -71,17 +71,14 @@ public class Apprentice extends Adventurer{
   }
 
   public String support(){
-    if (getHP() + 2 > 15)
+    if (getHP() + 2 >= 15)
     {
       setHP(15);
       return "STOCK RELIEF: stock full";
     }
     else{
-
-    int hp = 1;
     setHP(getHP()+hp);
-    return this+" drinks a coffee to restores "+restoreSpecial(6)+" "
-    + getSpecialName()+ " and "+hp+" HP";
+    return this+" STOCK RELIEF: "+hp+" HP";
   }
   }
 }
