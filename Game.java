@@ -11,6 +11,26 @@ public class Game{
     run();
   }
 
+  public static void go(int row,int col){
+    System.out.print("\033[" + row + ";" + col + "H");
+}
+
+public static int background(int color){
+  return color + 10;
+}
+public static void color(int m){
+  System.out.print("\033[;" + m + "m");
+}
+public static void color(int m1, int m2){
+  System.out.print("\033["+ m1 + ";" + m2 + "m");
+}
+public static void color(int m1, int m2, int m3){
+  System.out.print("\033["+ m1 + ";" + m2 + ";" + m3 + "m");
+}
+public static void color(int m1, int m2, int m3, int m4){
+  System.out.print("\033["+ m1 + ";" + m2 + ";" + m3 + ";"+m4+"m");
+}
+
   //Display the borders of your screen that will not change.
   //Do not write over the blank areas where text will appear or parties will appear.
   public static void drawBackground(){ //needs work; fix the extra line @ bottom
@@ -50,15 +70,14 @@ public class Game{
         color(background(BORDER_BACKGROUND));
         System.out.println(" ");
     }
-  }
+  
 
   //Display a line of text starting at
   //(columns and rows start at 1 (not zero) in the terminal)
   //use this method in your other text drawing methods to make things simpler.
   public static void drawText(String s,int startRow, int startCol){
-    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-    //YOUR CODE HERE
-    /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+    go(startRow, startCol);
+    System.out.print(s);
   }
 
   /*Use this method to place text on the screen at a particular location.
@@ -159,16 +178,32 @@ public class Game{
     //If only 1 enemy is added it should be the boss class.
     //start with 1 boss and modify the code to allow 2-3 adventurers later.
     ArrayList<Adventurer>enemies = new ArrayList<Adventurer>();
-    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-    //YOUR CODE HERE
-    /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+    int x = (int)(Math.random()*3)+1;
+    if(x==3) {
+      enemies.add(createRandomAdventurer());
+      enemies.add(createRandomAdventurer());
+    }
+    if(x==2) {
+    enemies.add(createRandomAdventurer());
+    enemies.add(createRandomAdventurer());
+    enemies.add(createRandomAdventurer()); //wtv swapped but works
+    }
 
+    if(x==1) {
+      Boss newBoss = new Boss("GrillFiend"+(int)(Math.random()*100));
+      enemies.add(newBoss);
+    }
     //Adventurers you control:
     //Make an ArrayList of Adventurers and add 2-4 Adventurers to it.
-    ArrayList<Adventurer> party = new ArrayList<>();
-    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-    //YOUR CODE HERE
-    /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+    ArrayList<Adventurer> party = new ArrayList<>(); //NOTE TO SELF NAMING??
+    Apprentice alice = new Apprentice("Alice"+(int)(Math.random()*100));
+    Baker bob = new Baker("Bob"+(int)(Math.random()*100));
+    Charcutier cAdventurer = new Charcutier("Carmack"+(int)(Math.random()*100));
+      enemies.add(yes);
+      enemies.add(alice);
+      enemies.add(bob);
+      enemies.add(cAdventurer);
+   
 
     boolean partyTurn = true;
     int whichPlayer = 0;
