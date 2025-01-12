@@ -76,12 +76,16 @@ public abstract class Adventurer{
 
   public Adventurer(String name){
     this(name, 10);
+    supported = false;
+    supportTurns = 2;
   }
 
   public Adventurer(String name, int hp){
     this.name = name;
     this.HP = hp;
     this.maxHP = hp;
+    Supported = false;
+    supportTurns= 2;
   }
 
   //toString method
