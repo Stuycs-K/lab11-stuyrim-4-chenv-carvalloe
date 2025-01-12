@@ -86,21 +86,18 @@ public class Baker extends Adventurer{
   }
   //TO BE WRITTEN/MODIFIED
   public String support(Adventurer other){
+    
     return "Gives a coffee to "+other+" and restores "
     + other.restoreSpecial(5)+" "+other.getSpecialName();
   }
-  /*Restores 6 special and 1 hp to self.*/
   public String support(){
-    if(this.getSpecial()<12) {
-      this.setSpecial(this.getSpecial()+3);
-      return "" + this + " expertly gathers 3 more leaveners from the kitchen cupboard"
-      + ", leading to a total of " + this.getSpecial() + " leaveners.";
+    if (getSpecial() + 3 >= 15)
+    {
+      setSpecial(15);
     }
-    else {
-      int l = 15-this.getSpecial();
-      this.setSpecial(15);
-      return "" + this + " expertly gathers " + l+" more leaveners from the kitchen cupboard"
-      + ", leading to a total of " + this.getSpecial() + " leaveners.";
+    else
+    {
+      setSpecial(getSpecial() + 3);
     }
+       }
   }
-}
