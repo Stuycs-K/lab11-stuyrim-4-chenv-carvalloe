@@ -84,7 +84,7 @@ public class Baker extends Adventurer{
     }
 
   }
-  //TO BE WRITTEN/MODIFIED
+  //will write this one after Game.java. not sure how to access the results of each turn so that it will last only two turns
   public String support(Adventurer other){
     
     return "Gives a coffee to "+other+" and restores "
