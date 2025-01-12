@@ -101,8 +101,18 @@ public static void color(int m1, int m2, int m3, int m4){
 
     //return a random adventurer (choose between all available subclasses)
     //feel free to overload this method to allow specific names/stats.
-    public static Adventurer createRandomAdventurer(){
-      return new Apprentice("Alice"+(int)(Math.random()*100));
+    public static Adventurer createRandomAdventurer(){ //DOES THIS INCLUDE THE BOSS? *************
+      int x = (int)(Math.random()*3);
+      if(x==0) {
+      return new Apprentice("Alicia"+(int)(Math.random()*100));
+      }
+      else if(x==1) {
+
+      return new Baker("Bobby"+(int)(Math.random()*100));
+      }
+      else {
+      return new Apprentice("Caramel"+(int)(Math.random()*100));
+      }
     }
 
     /*Display a List of 2-4 adventurers on the rows row through row+3 (4 rows max)
@@ -199,10 +209,9 @@ public static void color(int m1, int m2, int m3, int m4){
     Apprentice alice = new Apprentice("Alice"+(int)(Math.random()*100));
     Baker bob = new Baker("Bob"+(int)(Math.random()*100));
     Charcutier cAdventurer = new Charcutier("Carmack"+(int)(Math.random()*100));
-      enemies.add(yes);
-      enemies.add(alice);
-      enemies.add(bob);
-      enemies.add(cAdventurer);
+      party.add(alice);
+      party.add(bob);
+      party.add(cAdventurer);
    
 
     boolean partyTurn = true;
