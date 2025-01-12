@@ -4,6 +4,7 @@ public class Baker extends Adventurer{
   /*the other constructors ultimately call the constructor
   *with all parameters.*/
   public Baker(String name, int hp){
+    super(supported, supportTurns);
     super(name,hp);
     setmaxHP(hp);
     leavenerMax = 15;
