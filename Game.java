@@ -36,7 +36,7 @@ public static void color(int m1, int m2, int m3, int m4){
   public static void drawBackground(){ //needs work; fix the extra line @ bottom
     //NOTE: COPIED FROM 12-04-COLOR SCREEN W MODIFICATIONS
     System.out.print(CLEAR_SCREEN); //is this fine?
-        go(0,0);
+        go(1,1); //will this make things be off???
         int wide = 80; //80 x 30 width
         int len = 30; //80 x 30 length specificatin
         color(background(BORDER_COLOR));
@@ -91,10 +91,20 @@ public static void color(int m1, int m2, int m3, int m4){
   *@param height the number of rows
   */
   public static void TextBox(int row, int col, int width, int height, String text){
+    for(int i = row; i < row+width; i++) {
+      for(int j = col; j < col+height; j++) {
+        go(i,j);
+        System.out.println(" ";)
+      }
+    }
     go(row,col); //???? how to deal w indexing
-    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-    //YOUR CODE HERE
-    /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+    if(width > text.length()) {
+      System.out.println(text.substring(0,width));
+      TextBox(row+1,col,width,height-1,text.substring(width));
+    }
+    else {
+      System.out.println(text);
+    }
   }
 
 
@@ -125,7 +135,8 @@ public static void color(int m1, int m2, int m3, int m4){
     *Caffeine: 20 Mana: 10   Snark: 1
     * ***THIS ROW INTENTIONALLY LEFT BLANK***
     */
-    public static void drawParty(ArrayList<Adventurer> party,int startRow){
+    public static void drawParty(ArrayList<Adventurer> party,int startRow){//the name is under 13 chars
+
 
       /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
       //YOUR CODE HERE
@@ -136,10 +147,12 @@ public static void color(int m1, int m2, int m3, int m4){
   //Use this to create a colorized number string based on the % compared to the max value.
   public static String colorByPercent(int hp, int maxHP){
     String output = String.format("%2s", hp+"")+"/"+String.format("%2s", maxHP+"");
-    //COLORIZE THE OUTPUT IF HIGH/LOW:
-    // under 25% : red
-    // under 75% : yellow
-    // otherwise : white
+    if(hp < maxHP/4) {
+      return "\u001B[31m" + + "\u001B[0m";
+    }
+    else if(hp < 3*maxHP/4) {
+      return  "\u001B[33m" + output + "\u001B[0m"
+    }
     return output;
   }
 
