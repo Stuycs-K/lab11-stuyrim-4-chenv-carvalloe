@@ -71,6 +71,10 @@ public abstract class Adventurer{
     this.HP -= amount;
   }
   }
+public void changeSupported()
+{
+  this.supported = true;
+}
 
   //You did it wrong if this happens.
   public Adventurer(){

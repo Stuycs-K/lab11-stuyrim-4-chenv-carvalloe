@@ -9,7 +9,7 @@ public class Charcutier extends Adventurer{
   /*the other constructors ultimately call the constructor
   *with all parameters.*/
   public Charcutier(String name, int hp){
-    super(name,hp);
+    super(name,hp,supported, supportTurns);
     setmaxHP(hp);
     sausageMax = 20;
     sausage = sausageMax/2;

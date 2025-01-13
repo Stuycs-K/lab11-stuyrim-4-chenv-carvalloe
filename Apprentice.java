@@ -7,7 +7,7 @@ public class Apprentice extends Adventurer{
   *with all parameters.*/
   public Apprentice(String name, int hp){
 
-    super(name,hp); //permission to go over maxHP??
+    super(name,hp, supported, supportTurns); //permission to go over maxHP??
     setmaxHP(15); //should we do this
     if(hp > 15) {
       setHP(15);

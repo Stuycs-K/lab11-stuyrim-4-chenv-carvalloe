@@ -4,7 +4,7 @@ public class Baker extends Adventurer{
   /*the other constructors ultimately call the constructor
   *with all parameters.*/
   public Baker(String name, int hp){
-    super(name,hp);
+    super(name,hp,supported, supportTurns);
     setmaxHP(hp);
     leavenerMax = 15;
     leavener = leavenerMax/2;
@@ -86,9 +86,8 @@ public class Baker extends Adventurer{
   }
   // figured it out will continue working on it
   public String support(Adventurer other){
-    
-    return "Gives a coffee to "+other+" and restores "
-    + other.restoreSpecial(5)+" "+other.getSpecialName();
+    other.changeSupported();
+    return "SHORTCAKE SHIELD: Blocked 50% of damage to "+other+" for next two turns";
   }
 
   public String support(){
