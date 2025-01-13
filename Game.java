@@ -70,7 +70,7 @@ public static void color(int m1, int m2, int m3, int m4){
         color(background(BORDER_BACKGROUND));
         System.out.println(" ");
     }
-  
+
 
   //Display a line of text starting at
   //(columns and rows start at 1 (not zero) in the terminal)
@@ -91,6 +91,7 @@ public static void color(int m1, int m2, int m3, int m4){
   *@param height the number of rows
   */
   public static void TextBox(int row, int col, int width, int height, String text){
+    go(row,col); //???? how to deal w indexing
     /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
     //YOUR CODE HERE
     /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
@@ -212,7 +213,7 @@ public static void color(int m1, int m2, int m3, int m4){
       party.add(alice);
       party.add(bob);
       party.add(cAdventurer);
-   
+
 
     boolean partyTurn = true;
     int whichPlayer = 0;

@@ -64,9 +64,12 @@ public abstract class Adventurer{
         supported = false;
         supportTurns = 2;
       }
-      
+      this.HP -= x;
+
     }
+    else {
     this.HP -= amount;
+  }
   }
 
   //You did it wrong if this happens.
