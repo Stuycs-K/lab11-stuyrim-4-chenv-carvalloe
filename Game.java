@@ -94,7 +94,7 @@ public static void color(int m1, int m2, int m3, int m4){
     for(int i = row; i < row+width; i++) {
       for(int j = col; j < col+height; j++) {
         go(i,j);
-        System.out.println(" ";)
+        System.out.println(" ");
       }
     }
     go(row,col); //???? how to deal w indexing
@@ -148,10 +148,10 @@ public static void color(int m1, int m2, int m3, int m4){
   public static String colorByPercent(int hp, int maxHP){
     String output = String.format("%2s", hp+"")+"/"+String.format("%2s", maxHP+"");
     if(hp < maxHP/4) {
-      return "\u001B[31m" + + "\u001B[0m";
+      return "\u001B[31m" + output + "\u001B[0m";
     }
     else if(hp < 3*maxHP/4) {
-      return  "\u001B[33m" + output + "\u001B[0m"
+      return  "\u001B[33m" + output + "\u001B[0m";
     }
     return output;
   }
@@ -249,23 +249,30 @@ public static void color(int m1, int m2, int m3, int m4){
       input = userInput(in);
 
       //example debug statment
-      TextBox(24,2,1,78,"input: "+input+" partyTurn:"+partyTurn+ " whichPlayer="+whichPlayer+ " whichOpp="+whichOpponent );
+      //TextBox(24,2,1,78,"input: "+input+" partyTurn:"+partyTurn+ " whichPlayer="+whichPlayer+ " whichOpp="+whichOpponent );
 
       //display event based on last turn's input
       if(partyTurn){
 
         //Process user input for the last Adventurer:
         if(input.equals("attack") || input.equals("a")){
-          /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-          //YOUR CODE HERE
-          /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+          party.get(whichPlayer).attack(enemies.get(whichOpponent));
         }
         else if(input.equals("special") || input.equals("sp")){
+          party.get(whichPlayer).specialAttack(enemies.get(whichOpponent));
           /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
           //YOUR CODE HERE
           /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
         }
         else if(input.startsWith("su ") || input.startsWith("support ")){
+          String l = in.next();
+          int playerSupported = Integer.parseInt(in.next());
+          if(playerSupported==whichPlayer) {
+            party.get(whichPlayer).support();
+          }
+          else {
+            party.get(whichPlayer).support(playerSupported);
+          }
           //"support 0" or "su 0" or "su 2" etc.
           //assume the value that follows su  is an integer.
           /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
@@ -299,13 +306,25 @@ public static void color(int m1, int m2, int m3, int m4){
 
         //enemy attacks a randomly chosen person with a randomly chosen attack.z`
         //Enemy action choices go here!
-        /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-        //YOUR CODE HERE
-        /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
-
+        int randomP = (int)(Math.random()*party.size());
+        int randomIndex = (int) (Math.random()*3);
+        if(randomIndex==0) {
+          enemies.get(q).attack(party.get(randomP));
+        }
+        else if(randomIndex==1) {
+            enemies.get(q).specialAttack(party.get(randomP));
+        }
+        else if(randomIndex==2) {
+          int randomE = (int)(Math.random()*enemies.size());
+          if(randomE == q) {
+            enemies.get(q).support();
+          }
+        else {
+          enemies.get(q).support(enemies.get(randomE)); //other support
+        }
 
         //Decide where to draw the following prompt:
-        String prompt = "press enter to see next turn";
+        String prompt = "press enter to see next turn"; //??? note to self do this!
 
         whichOpponent++;
 
