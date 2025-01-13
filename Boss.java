@@ -9,7 +9,7 @@ public class Boss extends Adventurer{
     if(hp > 40) {
       setHP(40);
     }
-    saltMax = 12;
+    saltMax = 25;
     salt = saltMax/2;
   }
 
@@ -19,7 +19,7 @@ public class Boss extends Adventurer{
   }
 
   public Boss(){
-    this("GrillFiend");
+    this("Gordon");
   }
 
   /*The next 8 methods are all required because they are abstract:*/
@@ -46,7 +46,7 @@ public class Boss extends Adventurer{
 
   /*Deal 2-7 damage to opponent, restores 2 caffeine*/
   public String attack(Adventurer other){
-    int damage = (int)(Math.random()*6)+2;
+    int damage = (int)(Math.random()*10)+1;
     other.applyDamage(damage);
     restoreSpecial(2);
     return this + " attacked "+ other + " and dealt "+ damage +
