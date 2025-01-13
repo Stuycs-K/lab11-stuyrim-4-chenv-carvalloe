@@ -191,7 +191,7 @@ public static void color(int m1, int m2, int m3, int m4){
     Text.go(32,1);
   }
 
-  public static void run(){
+  public static void run(){ //what happens to party size after dying?
     //Clear and initialize
     Text.hideCursor();
     Text.clear();
@@ -258,26 +258,22 @@ public static void color(int m1, int m2, int m3, int m4){
         if(input.equals("attack") || input.equals("a")){
           party.get(whichPlayer).attack(enemies.get(whichOpponent));
         }
+
         else if(input.equals("special") || input.equals("sp")){
           party.get(whichPlayer).specialAttack(enemies.get(whichOpponent));
-          /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-          //YOUR CODE HERE
-          /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
         }
+
         else if(input.startsWith("su ") || input.startsWith("support ")){
           String l = in.next();
           int playerSupported = Integer.parseInt(in.next());
+
           if(playerSupported==whichPlayer) {
             party.get(whichPlayer).support();
           }
           else {
-            party.get(whichPlayer).support(playerSupported);
+            party.get(whichPlayer).support(party.get(playerSupported));
           }
-          //"support 0" or "su 0" or "su 2" etc.
-          //assume the value that follows su  is an integer.
-          /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-          //YOUR CODE HERE
-          /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+
         }
 
         //You should decide when you want to re-ask for user input
@@ -308,19 +304,20 @@ public static void color(int m1, int m2, int m3, int m4){
         //Enemy action choices go here!
         int randomP = (int)(Math.random()*party.size());
         int randomIndex = (int) (Math.random()*3);
+        int randomEnemy = (int)(Math.random()*enemies.size());
         if(randomIndex==0) {
-          enemies.get(q).attack(party.get(randomP));
+          enemies.get(randomEnemy).attack(party.get(randomP));
         }
         else if(randomIndex==1) {
-            enemies.get(q).specialAttack(party.get(randomP));
+            enemies.get(randomEnemy).specialAttack(party.get(randomP));
         }
         else if(randomIndex==2) {
           int randomE = (int)(Math.random()*enemies.size());
-          if(randomE == q) {
-            enemies.get(q).support();
+          if(randomE == randomEnemy) {
+            enemies.get(randomEnemy).support();
           }
         else {
-          enemies.get(q).support(enemies.get(randomE)); //other support
+          enemies.get(randomEnemy).support(enemies.get(randomE)); //other support
         }
 
         //Decide where to draw the following prompt:
@@ -351,4 +348,5 @@ public static void color(int m1, int m2, int m3, int m4){
     //After quit reset things:
     quit();
   }
+}
 }

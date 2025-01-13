@@ -75,6 +75,9 @@ public void changeSupported()
 {
   this.supported = true;
 }
+public void changeSupportedTurns (int n){
+  supportTurns=n;
+}
 
   //You did it wrong if this happens.
   public Adventurer(){
