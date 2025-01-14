@@ -33,10 +33,10 @@ public static void color(int m1, int m2, int m3, int m4){
 
   //Display the borders of your screen that will not change.
   //Do not write over the blank areas where text will appear or parties will appear.
-  public static void drawBackground(){ //needs work; fix the extra line @ bottom
+  public static void drawBackground(){ //needs work; fix the extra line @ bottom ????? and other
     //NOTE: COPIED FROM 12-04-COLOR SCREEN W MODIFICATIONS
     System.out.print(CLEAR_SCREEN); //is this fine?
-        go(1,1); //will this make things be off???
+        go(0,0); //will this make things be off???
         int wide = 80; //80 x 30 width
         int len = 30; //80 x 30 length specificatin
         color(background(BORDER_COLOR));
@@ -56,12 +56,13 @@ public static void color(int m1, int m2, int m3, int m4){
          //for(int i = 2; i < wid; j++) {
         for(int i = 0; i < wide; i++){
             System.out.print(" ");
+            go(len,i);
         }
 
         //for(int j = 1; j < len; j++) {
-        for(int j = 1; j <= len; j++) {
+        for(int j = 0; j < wide; j++) {
 
-            go(j, wide + 1);
+            go(len,j);
 
             System.out.println(" ");
         }
@@ -141,6 +142,7 @@ public static void color(int m1, int m2, int m3, int m4){
       int l = party.size();
       int[] coordinates = new int[l];
       for(int i = 0; i < l; i++) {
+
         coordinates[i]=80/l*i+1;
       }
       for(int i = 0; i < l; i++) {
@@ -186,7 +188,7 @@ public static void color(int m1, int m2, int m3, int m4){
     //draw player party
     drawParty(party, 2);
 
-    drawParty(enemies,76); //check indexing?
+    drawParty(enemies,26); //check indexing?
 
 
     //draw enemy party
