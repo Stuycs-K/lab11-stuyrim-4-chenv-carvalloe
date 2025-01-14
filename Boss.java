@@ -68,7 +68,7 @@ public class Boss extends Adventurer{
     if (fifty == 0)
     {
       other.restoreSpecial(5);
-      other.setHP(this.getHP() + 5);
+      other.restoreHP(5);
       return "BEEF WELLINGTON CHALLENGE: Gordon loved your wellingon and gifted you 5 salt and 5 HP points";
     }
     else
@@ -82,7 +82,7 @@ public class Boss extends Adventurer{
     if (fifty == 0)
     {
       this.restoreSpecial(7);
-      this.setHP(this.getHP() + 5);
+      this.restoreHP(5);
       return "MICHELIN STAR: celebrity loved your food and gifted you 7 salt and 5 HP points";
     }
     else
