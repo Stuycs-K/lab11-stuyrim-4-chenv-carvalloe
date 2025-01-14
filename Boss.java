@@ -63,16 +63,23 @@ public class Boss extends Adventurer{
     }
 
   }
-  /*Restores 5 special to other*/
+  
   public String support(Adventurer other){
     return "Gives a coffee to "+other+" and restores "
     + other.restoreSpecial(5)+" "+other.getSpecialName();
   }
-  /*Restores 6 special and 1 hp to self.*/
+ 
   public String support(){
-    int hp = 1;
-    setHP(getHP()+hp);
-    return this+" drinks a coffee to restores "+restoreSpecial(6)+" "
-    + getSpecialName()+ " and "+hp+" HP";
+    int fifty = (int)(Math.Random() * 2);
+    if (fifty == 0)
+    {
+      this.restoreSpecial(7);
+      this.setHP(this.getHP() + 5;
+      return "MICHELIN STAR: celebrity loved your food and gifted you 7 salt and 5 HP points";
+    }
+    else
+    {
+      return "MICHELIN STAR REVOKED: celebrity hated your food and left no tip";
+    }
   }
 }
