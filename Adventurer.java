@@ -122,7 +122,15 @@ public void changeSupportedTurns (int n){
 
   //Set Methods
   public void setHP(int health){
+    if (health <= getmaxHP())
+    {
     this.HP = health;
+  }
+  else
+  {
+    this.HP = getMaxHP();
+  }
+
   }
 
   public void setName(String s){
