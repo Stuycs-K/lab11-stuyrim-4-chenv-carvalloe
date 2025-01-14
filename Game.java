@@ -340,7 +340,7 @@ public static void color(int m1, int m2, int m3, int m4){
       }
 
       //display the updated screen after input has been processed.
-      drawScreen(party,enemies);
+      drawScreen();
 
 
     }//end of main game loop

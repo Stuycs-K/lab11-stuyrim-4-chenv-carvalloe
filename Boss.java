@@ -43,7 +43,7 @@ public class Boss extends Adventurer{
   public int getSpecialMax(){
     return saltMax;
   }
-  
+
   public String attack(Adventurer other){
     int damage = (int)(Math.random()*10)+1;
     other.applyDamage(damage);
@@ -56,25 +56,25 @@ public class Boss extends Adventurer{
     if(getSpecial() >= 20){
       other.setSpecial(0);
       this.setSpecial(this.getSpecial() - 20);
-      return "IDIOT SANDWICH: " + this + " eliminated "+other.getSpecialName()
-      " of "+other + " and lost 20 " + this.getSpecialName(); 
+      return "IDIOT SANDWICH: " + this + " eliminated "+other.getSpecialName() +
+      " of "+other + " and lost 20 " + this.getSpecialName();
     }else{
       return "Not enough salt. Instead "+attack(other);
     }
 
   }
-  
+
   public String support(Adventurer other){
     return "Gives a coffee to "+other+" and restores "
     + other.restoreSpecial(5)+" "+other.getSpecialName();
   }
- 
+
   public String support(){
-    int fifty = (int)(Math.Random() * 2);
+    int fifty = (int)(Math.random() * 2);
     if (fifty == 0)
     {
       this.restoreSpecial(7);
-      this.setHP(this.getHP() + 5;
+      this.setHP(this.getHP() + 5);
       return "MICHELIN STAR: celebrity loved your food and gifted you 7 salt and 5 HP points";
     }
     else
