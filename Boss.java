@@ -64,7 +64,7 @@ public class Boss extends Adventurer{
   }
 
   public String support(Adventurer other){
-    int fifty = (int)(Math.Random() * 2);
+    int fifty = (int)(Math.random() * 2);
     if (fifty == 0)
     {
       other.restoreSpecial(5);
@@ -75,6 +75,7 @@ public class Boss extends Adventurer{
     {
       return "BEEF WELLINGTON CHALLENGE: Gordon hated your food and only gave you 2 salt and 2 HP";
     }
+  }
 
   public String support(){
     int fifty = (int)(Math.random() * 2);
