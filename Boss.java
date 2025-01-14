@@ -43,28 +43,23 @@ public class Boss extends Adventurer{
   public int getSpecialMax(){
     return saltMax;
   }
-
-  /*Deal 2-7 damage to opponent, restores 2 caffeine*/
+  
   public String attack(Adventurer other){
     int damage = (int)(Math.random()*10)+1;
     other.applyDamage(damage);
-    restoreSpecial(2);
-    return this + " attacked "+ other + " and dealt "+ damage +
-    " points of damage. They then take a sip of their coffee.";
+    this.applyDamage(10 - damage);
+    return "HOT OIL SPILL: " + this + " attacked "+ other + " and dealt "+ damage +
+    " points of damage. And lost" + (10 - damage) + "points";
   }
 
-  /*Deal 3-12 damage to opponent, only if caffeine is high enough.
-  *Reduces caffeine by 8.
-  */
   public String specialAttack(Adventurer other){
-    if(getSpecial() >= 8){
-      setSpecial(getSpecial()-8);
-      int damage = (int)(Math.random()*5+Math.random()*5)+3;
-      other.applyDamage(damage);
-      return this + " used their skills to hack the matrix. "+
-      " This glitched out "+other+" dealing "+ damage +" points of damage.";
+    if(getSpecial() >= 20){
+      other.setSpecial(0);
+      this.setSpecial(this.getSpecial() - 20);
+      return "IDIOT SANDWICH: " + this + " eliminated "+other.getSpecialName()
+      " of "+other + " and lost 20 " + this.getSpecialName(); 
     }else{
-      return "Not enough caffeine to use the ultimate code. Instead "+attack(other);
+      return "Not enough salt. Instead "+attack(other);
     }
 
   }
