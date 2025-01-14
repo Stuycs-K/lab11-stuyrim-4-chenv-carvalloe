@@ -137,7 +137,23 @@ public static void color(int m1, int m2, int m3, int m4){
     */
     public static void drawParty(ArrayList<Adventurer> party,int startRow){//the name is under 13 chars
 
-      
+      go(startRow,1);
+      int l = party.size();
+      int[] coordinates = new int[l];
+      for(int i = 0; i < l; i++) {
+        coordinates[i]=80/l*i+1;
+      }
+      for(int i = 0; i < l; i++) {
+        go(startRow,coordinates[i]);
+        drawText(party.get(i).getName(),startRow,coordinates[i]);
+        go(startRow+1,coordinates[i]);
+        drawText("HP: "+party.get(i).getHP()+"/"+(party.get(i)).getmaxHP()
+        ,startRow+1,coordinates[i]);
+        go(startRow+2,coordinates[i]);
+        drawText(party.get(i).getSpecialName()+": "+party.get(i).getSpecial()+"/"+
+          party.get(i).getSpecialMax(),startRow+2,coordinates[i]);
+      }
+
       /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
       //YOUR CODE HERE
       /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
