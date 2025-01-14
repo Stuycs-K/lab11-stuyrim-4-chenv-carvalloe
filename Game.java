@@ -137,7 +137,7 @@ public static void color(int m1, int m2, int m3, int m4){
     */
     public static void drawParty(ArrayList<Adventurer> party,int startRow){//the name is under 13 chars
 
-
+      
       /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
       //YOUR CODE HERE
       /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
@@ -168,6 +168,9 @@ public static void color(int m1, int m2, int m3, int m4){
     drawBackground();
 
     //draw player party
+    drawParty(party, 2);
+
+    drawParty(enemies,76); //check indexing?
 
 
     //draw enemy party
@@ -238,7 +241,7 @@ public static void color(int m1, int m2, int m3, int m4){
     //Draw the window border
 
     //You can add parameters to draw screen!
-    drawScreen();//initial state.
+    drawScreen(party,enemies);//initial state.
 
     //Main loop
 
@@ -340,7 +343,7 @@ public static void color(int m1, int m2, int m3, int m4){
       }
 
       //display the updated screen after input has been processed.
-      drawScreen();
+      drawScreen(party,enemies);
 
 
     }//end of main game loop
