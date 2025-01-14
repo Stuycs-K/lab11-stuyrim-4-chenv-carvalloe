@@ -56,8 +56,7 @@ public class Boss extends Adventurer{
     if(getSpecial() >= 20){
       other.setSpecial(0);
       this.setSpecial(this.getSpecial() - 20);
-      return "IDIOT SANDWICH: " + this + " eliminated "+other.getSpecialName()
-      " of "+other + " and lost 20 " + this.getSpecialName();
+      return "IDIOT SANDWICH: " + this + " eliminated "+other.getSpecialName() + " of "+other + " and lost 20 " + this.getSpecialName();
     }else{
       return "Not enough salt. Instead "+attack(other);
     }
@@ -76,13 +75,13 @@ public class Boss extends Adventurer{
     {
       return "BEEF WELLINGTON CHALLENGE: Gordon hated your food and only gave you 2 salt and 2 HP";
     }
- 
+
   public String support(){
-    int fifty = (int)(Math.Random() * 2);
+    int fifty = (int)(Math.random() * 2);
     if (fifty == 0)
     {
       this.restoreSpecial(7);
-      this.setHP(this.getHP() + 5;
+      this.setHP(this.getHP() + 5);
       return "MICHELIN STAR: celebrity loved your food and gifted you 7 salt and 5 HP points";
     }
     else
