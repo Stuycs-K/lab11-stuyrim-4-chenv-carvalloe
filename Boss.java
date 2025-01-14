@@ -43,7 +43,7 @@ public class Boss extends Adventurer{
   public int getSpecialMax(){
     return saltMax;
   }
-  
+
   public String attack(Adventurer other){
     int damage = (int)(Math.random()*10)+1;
     other.applyDamage(damage);
@@ -57,17 +57,25 @@ public class Boss extends Adventurer{
       other.setSpecial(0);
       this.setSpecial(this.getSpecial() - 20);
       return "IDIOT SANDWICH: " + this + " eliminated "+other.getSpecialName()
-      " of "+other + " and lost 20 " + this.getSpecialName(); 
+      " of "+other + " and lost 20 " + this.getSpecialName();
     }else{
       return "Not enough salt. Instead "+attack(other);
     }
 
   }
-  
+
   public String support(Adventurer other){
-    return "Gives a coffee to "+other+" and restores "
-    + other.restoreSpecial(5)+" "+other.getSpecialName();
-  }
+    int fifty = (int)(Math.Random() * 2);
+    if (fifty == 0)
+    {
+      other.restoreSpecial(5);
+      other.setHP(this.getHP() + 5);
+      return "BEEF WELLINGTON CHALLENGE: Gordon loved your wellingon and gifted you 5 salt and 5 HP points";
+    }
+    else
+    {
+      return "BEEF WELLINGTON CHALLENGE: Gordon hated your food and only gave you 2 salt and 2 HP";
+    }
  
   public String support(){
     int fifty = (int)(Math.Random() * 2);
