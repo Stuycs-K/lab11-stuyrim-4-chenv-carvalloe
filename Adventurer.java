@@ -126,7 +126,11 @@ public void changeSupportedTurns (int n){
   }
 
   public void restoreHP(int health){
+<<<<<<< HEAD
+    if( health > getmaxHP() - getHP()){
+=======
     if(health > getmaxHP() - getHP()){
+>>>>>>> 8121b6623a715e49af1fbd5b736c85170056efaf
       health = getmaxHP() - getHP();
     }
     setHP(getHP()+health);
