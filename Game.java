@@ -46,7 +46,6 @@ public static void color(int m1, int m2, int m3, int m4){
         }
 
         for(int j = 1; j < len-1; j++) {
-
             System.out.println(" ");
         }
 
@@ -58,13 +57,12 @@ public static void color(int m1, int m2, int m3, int m4){
             System.out.print(" ");
             go(len,i);
         }
-
         //for(int j = 1; j < len; j++) {
         for(int j = 0; j < wide; j++) {
 
             go(len,j);
 
-            System.out.println(" ");
+            System.out.print(" ");
         }
 
         go(31,1);
