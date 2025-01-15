@@ -186,7 +186,7 @@ public static void color(int m1, int m2, int m3, int m4){
     //draw player party
     drawParty(party, 2);
 
-    drawParty(enemies,26); //check indexing?
+ //check indexing?
 
 
     //draw enemy party
