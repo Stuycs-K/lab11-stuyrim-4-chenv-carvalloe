@@ -126,10 +126,10 @@ public void changeSupportedTurns (int n){
   }
 
   public void restoreHP(int health){
-    if( n > getmaxHP() - getHP()){
-      n = getmaxHP() - getHP();
+    if(health > getmaxHP() - getHP()){
+      health = getmaxHP() - getHP();
     }
-    setHP(getHP()+n);
+    setHP(getHP()+health);
   }
 
   public void setName(String s){
