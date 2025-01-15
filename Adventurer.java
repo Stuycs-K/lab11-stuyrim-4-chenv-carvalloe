@@ -125,6 +125,13 @@ public void changeSupportedTurns (int n){
     this.HP = health;
   }
 
+  public void restoreHP(int health){
+    if( n > getmaxHP() - getHP()){
+      n = getmaxHP() - getHP();
+    }
+    setHP(getHP()+n);
+  }
+
   public void setName(String s){
     this.name = s;
   }
