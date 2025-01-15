@@ -36,38 +36,40 @@ public static void color(int m1, int m2, int m3, int m4){
   public static void drawBackground(){ //needs work; fix the extra line @ bottom ????? and other
     //NOTE: COPIED FROM 12-04-COLOR SCREEN W MODIFICATIONS
     System.out.print(CLEAR_SCREEN); //is this fine?
-        go(0,0); //will this make things be off???
+        go(1,1); //will this make things be off???
         int wide = 80; //80 x 30 width
         int len = 30; //80 x 30 length specificatin
         color(background(BORDER_COLOR));
+        go(1,1);
 
-        for(int i = 1; i < wide-1; i++){System.out.print(" ");
+        for(int i = 1; i <= wide; i++){
+          go(1,i);
+          System.out.print(" ");
 
         }
 
-        for(int j = 1; j < len-1; j++) {
-            System.out.println(" ");
+        for(int j = 1; j <= len; j++) {
+          go(j,1);
+            System.out.print(" ");
         }
 
         color(background(BORDER_COLOR));
-        go(len, 0);
          //PRINT REST
          //for(int i = 2; i < wid; j++) {
         for(int i = 0; i < wide; i++){
+          go(len,i);
             System.out.print(" ");
             go(len,i);
         }
         //for(int j = 1; j < len; j++) {
-        for(int j = 0; j < wide; j++) {
+        for(int j = 1; j < wide; j++) {
 
             go(len,j);
 
             System.out.print(" ");
         }
 
-        go(31,1);
-        color(background(BORDER_BACKGROUND));
-        System.out.println(" ");
+        Text.reset();
     }
 
 
@@ -136,12 +138,11 @@ public static void color(int m1, int m2, int m3, int m4){
     */
     public static void drawParty(ArrayList<Adventurer> party,int startRow){//the name is under 13 chars
 
-      go(startRow,1);
       int l = party.size();
       int[] coordinates = new int[l];
       for(int i = 0; i < l; i++) {
 
-        coordinates[i]=80/l*i+1;
+        coordinates[i]=80/l*i+2;
       }
       for(int i = 0; i < l; i++) {
         go(startRow,coordinates[i]);
@@ -174,9 +175,6 @@ public static void color(int m1, int m2, int m3, int m4){
 
 
 
-
-
-  //Display the party and enemies
   //Do not write over the blank areas where text will appear.
   //Place the cursor at the place where the user will by typing their input at the end of this method.
   public static void drawScreen(ArrayList<Adventurer> party, ArrayList<Adventurer> enemies){ //note to self: i passed in party and enemies, is this allowed T-T
@@ -186,7 +184,7 @@ public static void color(int m1, int m2, int m3, int m4){
     //draw player party
     drawParty(party, 2);
 
-    drawParty(enemies,26); //check indexing?
+    drawParty(enemies,30); //check indexing?
 
 
     //draw enemy party
@@ -195,8 +193,10 @@ public static void color(int m1, int m2, int m3, int m4){
 
   public static String userInput(Scanner in){
       //Move cursor to prompt location
+      Text.go(31,1);
 
       //show cursor
+      Text.showCursor();
 
       String input = in.nextLine();
 
@@ -227,13 +227,12 @@ public static void color(int m1, int m2, int m3, int m4){
       enemies.add(createRandomAdventurer());
       enemies.add(createRandomAdventurer());
     }
-    if(x==2) {
+    else if(x==2) {
     enemies.add(createRandomAdventurer());
     enemies.add(createRandomAdventurer());
     enemies.add(createRandomAdventurer()); //wtv swapped but works
     }
-
-    if(x==1) {
+    else {
       Boss newBoss = new Boss("GrillFiend"+(int)(Math.random()*100));
       enemies.add(newBoss);
     }
