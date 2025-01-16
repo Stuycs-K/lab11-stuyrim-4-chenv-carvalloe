@@ -56,23 +56,23 @@ public class Charcutier extends Adventurer{
     if(random == 0) {
     if(other.getHP() <= 6) {
       other.setHP(other.getHP()-3);
-      return "A dark cloud of smoke has confused " + other + "! " + "Dealt 3 HP points of damage to " + other;
+      return "SMOKED STRIKE: A dark cloud of smoke has confused " + other + "! " + "Dealt 3 HP points of damage to " + other;
     }
     else {
       int k = other.getHP()-other.getHP()/2;
       other.setHP(other.getHP()/2);
-      return "A dark cloud of smoke has confused " + other + "! " + k + " HP points of damage to " + other;
+      return "SMOKED STRIKE: A dark cloud of smoke has confused " + other + "! " + k + " HP points of damage to " + other;
     }
   }
   else {
     if(this.getHP() <= 6) {
       this.setHP(this.getHP()-3);
-      return "A dark cloud of smoke has confused " + this + "! Dealt 3 HP points of damage to " + this;
+      return "SMOKED STRIKE: A dark cloud of smoke has confused " + this + "! Dealt 3 HP points of damage to " + this;
     }
     else {
       int k = other.getHP()-other.getHP()/2;
       other.setHP(other.getHP()/2);
-      return "A dark cloud of smoke has confused " + this + "! " + "Dealt " + k + " HP points of damage to " + this;
+      return "SMOKED STRIKE: A dark cloud of smoke has confused " + this + "! " + "Dealt " + k + " HP points of damage to " + this;
     }
   }
   }
@@ -90,11 +90,11 @@ public class Charcutier extends Adventurer{
       if(this.getHP() <= 0) {
         this.setHP(0);
         if(other.getHP() <= 0) {
-        return this + " lost their life to the cured meat barrage, taking " +other + " with them.";
+        return "SAUSAGE SLING: " + this + " lost their life to the cured meat barrage, taking " +other + " with them.";
       }
-      return this + " lost their life to the cured meat barrage.";
+      return "SAUSAGE SLING: " +  this + " lost their life to the cured meat barrage.";
       }
-      return this + " used their sausages to launch a barrage. This dealt "+other+" and " + this + damage +" points of damage.";
+      return "SAUSAGE SLING: " + this + " used their sausages to launch a barrage. This dealt "+other+" and " + this + damage +" points of damage.";
     }else{
       return "Not enough sausages to barrage friends and foes. Instead "+attack(other);
     }
@@ -142,7 +142,7 @@ restoredSpecial = x/2;
         else {
  restoredSpecial = other.getSpecialMax()-other.getSpecial();
         }
-      return "Cured Edge has restored " + restoredHealth + " HP points and " + restoredSpecial +
+      return "CURED EDGE: restored " + restoredHealth + " HP points and " + restoredSpecial +
       " special points for " + other + "!";
   }
 

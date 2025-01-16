@@ -47,14 +47,14 @@ public class Baker extends Adventurer{
     int x = (int)(Math.random()*5);
     if(x!=0) {
     other.applyDamage(3);
-    return this + ", using a hot batter-filled cannon ball, attacked "+ other + " and dealt "+ 3 +
+    return "BATTER BOMB: " + this + ", using a hot batter-filled cannon ball, attacked "+ other + " and dealt "+ 3 +
     " points of damage.";
 
 
   }
   else {
     other.applyDamage(5);
-    return this + ", using a hot batter-filled cannon ball, attacked "+ other + " and dealt "+ 3 +
+    return "BATTER BOMB: " + this + ", using a hot batter-filled cannon ball, attacked "+ other + " and dealt "+ 3 +
     " points of damage. The impact was so strong it dealt another 2 points of damage.";
 
   }
@@ -69,14 +69,14 @@ public class Baker extends Adventurer{
     if(4*other.getHP()/10 > 4*other.getSpecial()/10) {
       int l = 4*other.getHP()/10;
       other.setHP(other.getHP()-4*other.getHP()/10);
-      return "" + this + " rolls away " + other + "'s HP by " + l
+      return "ROLLING PIN: " + this + " rolls away " + other + "'s HP by " + l
       + ", consuming 6 leavener in the process.";
     }
     else {
 
       int l = 4*other.getSpecial()/10;
       other.setSpecial(other.getSpecial()-4*other.getSpecial()/10);
-      return "" + this + " rolls away " + other + "'s " + other.getSpecialName() + " by " + l
+      return "ROLLING PIN: " + this + " rolls away " + other + "'s " + other.getSpecialName() + " by " + l
       + ", consuming 6 leavener in the process.";
     }
   }
@@ -97,12 +97,12 @@ public class Baker extends Adventurer{
       int s = 15-getSpecial();
       setSpecial(15);
 
-      return "Using the enthusiasm of a sugar rush, " + this + " restores " + s+  " leaveners.";
+      return "SUGAR RUSH: Using the enthusiasm of a sugar rush, " + this + " restores " + s+  " leaveners.";
     }
     else
     {
       setSpecial(getSpecial() + 3);
-      return "Using the enthusiasm of a sugar rush, " + this + " restores 3 leaveners.";
+      return "SUGAR RUSH: Using the enthusiasm of a sugar rush, " + this + " restores 3 leaveners.";
     }
     }
        }
