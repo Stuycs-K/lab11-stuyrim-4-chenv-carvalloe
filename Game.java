@@ -1,5 +1,6 @@
 import java.util.*;
-public class Game{
+public class Game{//??? glitch where u go over HP for charcutier, check others,
+  //??? use methods from Adventurer as needed
   private static final int WIDTH = 80;
   private static final int HEIGHT = 30;
   private static final int BORDER_COLOR = Text.BLACK;
@@ -39,7 +40,7 @@ public static void color(int m1, int m2, int m3, int m4){
         Text.go(1,1); //will this make things be off???
         int wide = 80; //80 x 30 width
         int len = 30; //80 x 30 length specificatin
-        color(background(BORDER_COLOR));
+        color(background(Text.WHITE));
         Text.go(1,1);
 
         for(int i = 1; i <= wide; i++){
@@ -53,7 +54,7 @@ public static void color(int m1, int m2, int m3, int m4){
             System.out.print(" ");
         }
 
-        color(background(BORDER_COLOR));
+        color(background(Text.WHITE));
          //PRINT REST
          //for(int i = 2; i < wid; j++) {
         for(int i = 0; i < wide; i++){
@@ -61,7 +62,7 @@ public static void color(int m1, int m2, int m3, int m4){
             System.out.print(" ");
         }
         //for(int j = 1; j < len; j++) {
-        color(background(BORDER_COLOR));
+        color(background(Text.WHITE));
         for(int j = 1; j < wide; j++) {
 
             Text.go(80,j);
@@ -71,6 +72,8 @@ public static void color(int m1, int m2, int m3, int m4){
         Text.go(31,1);
           color(background(BORDER_BACKGROUND));
         System.out.println(" ");
+        Text.go(30,1);
+        System.out.println(Text.colorize(" ",Text.WHITE));
         Text.reset();
     }
 
@@ -269,18 +272,19 @@ public static void color(int m1, int m2, int m3, int m4){
       input = userInput(in);
 
       //example debug statment
-      //TextBox(24,2,1,78,"input: "+input+" partyTurn:"+partyTurn+ " whichPlayer="+whichPlayer+ " whichOpp="+whichOpponent );
+      //TextBox(24,2,1,38,"input: "+input+" partyTurn:"+partyTurn+ " whichPlayer="+whichPlayer+ " whichOpp="+whichOpponent );
 
       //display event based on last turn's input
       if(partyTurn){//??? broken attack x3 from one side???
 
+        //TextBox(int row, int col, int width, int height, String text)
         //Process user input for the last Adventurer:
         if(input.equals("attack") || input.equals("a")){
-          System.out.println(party.get(whichPlayer).attack(enemies.get(whichOpponent)));
+          TextBox(6,2,39,10,party.get(whichPlayer).attack(enemies.get(whichOpponent)));
         }
 
         else if(input.equals("special") || input.equals("sp")){
-          party.get(whichPlayer).specialAttack(enemies.get(whichOpponent));
+          TextBox(6,2,38,10,party.get(whichPlayer).specialAttack(enemies.get(whichOpponent)));
         }
 
         else if(input.startsWith("su ") || input.startsWith("support ")){
@@ -288,10 +292,10 @@ public static void color(int m1, int m2, int m3, int m4){
           int playerSupported = Integer.parseInt(in.next());
 
           if(playerSupported==whichPlayer) {
-            party.get(whichPlayer).support();
+            TextBox(6,2,38,10,party.get(whichPlayer).support());
           }
           else {
-            party.get(whichPlayer).support(party.get(playerSupported));
+            TextBox(6,2,38,10,party.get(whichPlayer).support(party.get(playerSupported)));
           }
 
         }
@@ -326,18 +330,18 @@ public static void color(int m1, int m2, int m3, int m4){
         int randomIndex = (int) (Math.random()*3);
         int randomEnemy = (int)(Math.random()*enemies.size());
         if(randomIndex==0) {
-          enemies.get(randomEnemy).attack(party.get(randomP));
+          TextBox(6,2,38,10,enemies.get(randomEnemy).attack(party.get(randomP)));
         }
         else if(randomIndex==1) {
-            enemies.get(randomEnemy).specialAttack(party.get(randomP));
+            TextBox(6,2,38,10,enemies.get(randomEnemy).specialAttack(party.get(randomP)));
         }
         else if(randomIndex==2) {
           int randomE = (int)(Math.random()*enemies.size());
           if(randomE == randomEnemy) {
-            enemies.get(randomEnemy).support();
+            TextBox(6,2,38,10,enemies.get(randomEnemy).support());
           }
         else {
-          enemies.get(randomEnemy).support(enemies.get(randomE)); //other support
+          TextBox(6,2,38,10,enemies.get(randomEnemy).support(enemies.get(randomE))); //other support
         }
 
         //Decide where to draw the following prompt:
