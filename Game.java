@@ -62,9 +62,10 @@ public static void color(int m1, int m2, int m3, int m4){
             go(len,i);
         }
         //for(int j = 1; j < len; j++) {
+        color(background(BORDER_COLOR));
         for(int j = 1; j < wide; j++) {
 
-            go(len,j);
+            go(80,j);
 
             System.out.print(" ");
         }
@@ -95,16 +96,16 @@ public static void color(int m1, int m2, int m3, int m4){
     for(int i = row; i < row+width; i++) {
       for(int j = col; j < col+height; j++) {
         go(i,j);
-        System.out.println(" ");
+        System.out.print(" ");
       }
     }
     go(row,col); //???? how to deal w indexing
     if(width > text.length()) {
-      System.out.println(text.substring(0,width));
+      drawText(text.substring(0,width),row,col);
       TextBox(row+1,col,width,height-1,text.substring(width));
     }
     else {
-      System.out.println(text);
+      drawText(text,row,col);
     }
   }
 
@@ -184,7 +185,7 @@ public static void color(int m1, int m2, int m3, int m4){
     //draw player party
     drawParty(party, 2);
 
-    drawParty(enemies,30); //check indexing?
+    drawParty(enemies,26); //check indexing?
 
 
     //draw enemy party
