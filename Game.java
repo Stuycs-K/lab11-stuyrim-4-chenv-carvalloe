@@ -36,20 +36,20 @@ public static void color(int m1, int m2, int m3, int m4){
   public static void drawBackground(){ //needs work; fix the extra line @ bottom ????? and other
     //NOTE: COPIED FROM 12-04-COLOR SCREEN W MODIFICATIONS
     System.out.print(CLEAR_SCREEN); //is this fine?
-        go(1,1); //will this make things be off???
+        Text.go(1,1); //will this make things be off???
         int wide = 80; //80 x 30 width
         int len = 30; //80 x 30 length specificatin
         color(background(BORDER_COLOR));
-        go(1,1);
+        Text.go(1,1);
 
         for(int i = 1; i <= wide; i++){
-          go(1,i);
+          Text.go(1,i);
           System.out.print(" ");
 
         }
 
         for(int j = 1; j <= len; j++) {
-          go(j,1);
+          Text.go(j,1);
             System.out.print(" ");
         }
 
@@ -57,19 +57,20 @@ public static void color(int m1, int m2, int m3, int m4){
          //PRINT REST
          //for(int i = 2; i < wid; j++) {
         for(int i = 0; i < wide; i++){
-          go(len,i);
+          Text.go(len,i);
             System.out.print(" ");
-            go(len,i);
         }
         //for(int j = 1; j < len; j++) {
         color(background(BORDER_COLOR));
         for(int j = 1; j < wide; j++) {
 
-            go(80,j);
+            Text.go(80,j);
 
             System.out.print(" ");
         }
-
+        Text.go(31,1);
+          color(background(BORDER_BACKGROUND));
+        System.out.println(" ");
         Text.reset();
     }
 
@@ -124,7 +125,7 @@ public static void color(int m1, int m2, int m3, int m4){
       return new Baker("Bobby"+(int)(Math.random()*100));
       }
       else {
-      return new Apprentice("Caramel"+(int)(Math.random()*100));
+      return new Charcutier("Caramel"+(int)(Math.random()*100));
       }
     }
 
