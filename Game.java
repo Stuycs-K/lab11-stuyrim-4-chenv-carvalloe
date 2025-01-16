@@ -150,11 +150,10 @@ public static void color(int m1, int m2, int m3, int m4){
         go(startRow,coordinates[i]);
         drawText(party.get(i).getName(),startRow,coordinates[i]);
         go(startRow+1,coordinates[i]);
-        drawText("HP: "+party.get(i).getHP()+"/"+(party.get(i)).getmaxHP()
+        drawText("HP: "+colorByPercent(party.get(i).getHP(),party.get(i).getmaxHP())
         ,startRow+1,coordinates[i]);
         go(startRow+2,coordinates[i]);
-        drawText(party.get(i).getSpecialName()+": "+party.get(i).getSpecial()+"/"+
-          party.get(i).getSpecialMax(),startRow+2,coordinates[i]);
+        drawText(party.get(i).getSpecialName()+": "+colorByPercent(party.get(i).getSpecial(),party.get(i).getSpecialMax()),startRow+2,coordinates[i]);
       }
 
       /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
@@ -184,9 +183,9 @@ public static void color(int m1, int m2, int m3, int m4){
     drawBackground();
 
     //draw player party
-    drawParty(party, 2);
+    drawParty(party, 25);
 
-    drawParty(enemies,26); //check indexing?
+    drawParty(enemies,1); //check indexing?
 
 
     //draw enemy party
@@ -273,11 +272,11 @@ public static void color(int m1, int m2, int m3, int m4){
       //TextBox(24,2,1,78,"input: "+input+" partyTurn:"+partyTurn+ " whichPlayer="+whichPlayer+ " whichOpp="+whichOpponent );
 
       //display event based on last turn's input
-      if(partyTurn){
+      if(partyTurn){//??? broken attack x3 from one side???
 
         //Process user input for the last Adventurer:
         if(input.equals("attack") || input.equals("a")){
-          party.get(whichPlayer).attack(enemies.get(whichOpponent));
+          System.out.println(party.get(whichPlayer).attack(enemies.get(whichOpponent)));
         }
 
         else if(input.equals("special") || input.equals("sp")){
@@ -299,7 +298,7 @@ public static void color(int m1, int m2, int m3, int m4){
 
         //You should decide when you want to re-ask for user input
         //If no errors:
-        whichPlayer++;
+        whichPlayer++; //?????
 
 
         if(whichPlayer < party.size()){
