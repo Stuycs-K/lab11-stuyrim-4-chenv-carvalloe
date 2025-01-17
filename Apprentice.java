@@ -68,10 +68,18 @@ public class Apprentice extends Adventurer{
   }
   public String support(Adventurer other){
     int x = (int)((Math.random() * 4) + 1);
-    other.setHP(x);
+    if(other.getHP()+x <= other.getmaxHP()) {
+    other.setHP(other.getHP()+x);
     return "LAST MINUTE FIX: gives sauce to "+other+" and restores HP to " + other.getHP();
   }
+  else {
+    x = other.getmaxHP()-other.getHP();
+    other.setHP(other.getHP()+x);
+    return "LAST MINUTE FIX: gives sauce to "+other+" and restores HP to " + other.getHP();
 
+  }
+
+}
   public String support(){
     if (getHP() + 2 >= 15)
     {
