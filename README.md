@@ -17,11 +17,11 @@ Make a clear list of features that work/dont work
 
 ### Progress
 
-:x: Adding + testing adventurers
+:white_check_mark: Adding + testing adventurers
 
-:x: Creating displays/game screen
+:question: Creating displays/game screen
 
-:x: Creating opponents/special boss
+:question: Creating opponents/special boss
 
 :x: Optional addons for players
 
