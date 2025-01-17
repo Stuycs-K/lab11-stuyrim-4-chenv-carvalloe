@@ -58,8 +58,21 @@ public class Apprentice extends Adventurer{
   public String specialAttack(Adventurer other){
     if(getSpecial() == 1){
       int x = this.getHP();
+      if (other.getHP() > this.getmaxHP())
+      {
+        this.setHP(this.getmaxHP());
+      }
+      else
+      {
       this.setHP(other.getHP());
+    }
+    if (x > other.getmaxHP())
+    {
+      other.setHP(other.getmaxHP());
+    }
+    else{
       other.setHP(x);
+    }
       return "RECIPE SWAP" + this + " swapped HP with "+ other.getName()+ ". " + this + "new HP is " + this.getHP() + ". " + other + "new HP is " + other.getHP();
       }else{
       return "Not enough sauce to use the ultimate code. Instead "+attack(other);
