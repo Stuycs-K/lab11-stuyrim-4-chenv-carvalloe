@@ -122,7 +122,7 @@ public void changeSupportedTurns (int n){
 
   //Set Methods
   public void setHP(int health){
-    this.HP = health;
+    this.HP = Math.min(health, this.maxHP);
   }
 
   public void restoreHP(int health){
