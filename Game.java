@@ -247,10 +247,12 @@ public static void color(int m1, int m2, int m3, int m4){
 
     while(! (input.equalsIgnoreCase("q") || input.equalsIgnoreCase("quit"))){
       if(whichPlayer>=party.size()) {
-        whichPlayer=0; //??? can we do this?
+        whichPlayer=0;
+        partyTurn = false; //??? can we do this?
       }
       if(whichOpponent>=enemies.size()) {
-        whichOpponent=0; //??? can we do this?
+        whichOpponent=0;
+        partyTurn = true; //??? can we do this?
       }
       String preprompt = "Enter command for "+party.get(whichPlayer)+": attack/special/quit";
     drawText(preprompt,29,2);
@@ -275,7 +277,6 @@ public static void color(int m1, int m2, int m3, int m4){
         }
 
         else if(input.startsWith("su ") || input.startsWith("support ")){
-          String l = in.next();
           int playerSupported = Integer.parseInt(in.next());
 
           if(playerSupported==whichPlayer) {
@@ -307,7 +308,8 @@ public static void color(int m1, int m2, int m3, int m4){
           //This is after the player's turn, and allows the user to see the enemy turn
           //Decide where to draw the following prompt:
           String prompt = "press enter to see monster's turn";
-          drawText(preprompt,29,2);
+          TextBox(29,2,78,10,"                                                                              ");
+          drawText(prompt,29,2);
 
           partyTurn = false;
           whichOpponent = 0;
@@ -339,8 +341,9 @@ public static void color(int m1, int m2, int m3, int m4){
         }
 
         //Decide where to draw the following prompt:
-        String prompt = "press enter to see next turn"; //??? note to self do this!
-
+        String prompt = "enemy's turn: press enter to see next turn"; //??? note to self do this!
+        TextBox(29,2,78,10,"                                                                              ");
+        TextBox(29,2,78,10,prompt); //??? how to show enemies actions
         whichOpponent++;
 
       }//end of one enemy.
@@ -399,9 +402,11 @@ else if(randomIndex==2) {
   }
 else {
   TextBox(6,2,78,10,enemies.get(randomEnemy).support(enemies.get(randomE))); //other support
+} //??? why dont these work
 }
-}
-
+String prompt = "enemy's turn: press enter to see next turn"; //??? note to self do this!
+        TextBox(29,2,78,10,"                                                                              ");
+        TextBox(29,2,78,10,prompt);
 }
 
       //modify this if statement.
