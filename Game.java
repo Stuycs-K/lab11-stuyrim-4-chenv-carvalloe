@@ -12,7 +12,6 @@ public class Game{//??? glitch where u go over HP for charcutier, check others,
   public static void main(String[] args) {
     run();
   }
-
   public static void go(int row,int col){
     System.out.print("\033[" + row + ";" + col + "H");
 }
@@ -38,39 +37,68 @@ public static void color(int m1, int m2, int m3, int m4){
   public static void drawBackground(){ //needs work; fix the extra line @ bottom ????? and other
     //NOTE: COPIED FROM 12-04-COLOR SCREEN W MODIFICATIONS
     System.out.print(CLEAR_SCREEN); //is this fine?
-        Text.go(1,1); //will this make things be off???
-        int wide = 80; //80 x 30 width
-        int len = 30; //80 x 30 length specificatin
-        color(background(Text.WHITE));
-        Text.go(1,1);
 
-        for(int i = 1; i <= wide; i++){
+        for(int i = 1; i <= 80; i++){
           Text.go(1,i);
-          System.out.print(" ");
 
+          if(i%2 == 1) {
+            System.out.print(Text.colorize("/",Text.BOLD,Text.RED+Text.BRIGHT));
+          }
+          else {
+            System.out.print(Text.colorize("\\",Text.BOLD,Text.RED+Text.BRIGHT));
+          }
         }
 
-        for (int j = 1; j <= HEIGHT; j++) {
+        for (int j = 1; j <= 30; j++) {
           go(j, 1);
-          System.out.print(" ");
-          go(j, WIDTH);
-          System.out.print(" ");
+          if(j%2 == 1) {
+            System.out.print(Text.colorize("/",Text.BOLD,Text.RED+Text.BRIGHT));
+          }
+          else {
+            System.out.print(Text.colorize("\\",Text.BOLD,Text.RED+Text.BRIGHT));
+          }
+          go(j,80);
+          if(j%2 == 1) {
+            System.out.print(Text.colorize("\\",Text.BOLD,Text.RED+Text.BRIGHT));
+          }
+          else {
+            System.out.print(Text.colorize("/",Text.BOLD,Text.RED+Text.BRIGHT));
+          }
+          
+          for(int i = 1; i <= 80; i++){
+            Text.go(30,i);
+            if(i%2 == 1) {
+              System.out.print(Text.colorize("\\",Text.BOLD,Text.RED+Text.BRIGHT));
+            }
+            else {
+              System.out.print(Text.colorize("/",Text.BOLD,Text.RED+Text.BRIGHT));
+            }
+          }
+          
       }
 
-        //for(int j = 1; j < len; j++) {
-        color(background(Text.WHITE));
-        for(int j = 1; j <= WIDTH; j++) {
-
-            Text.go(HEIGHT,j);
-
-            System.out.print(" ");
+      for (int j = 2; j <= 79; j++){
+        Text.go(6,j);
+        System.out.print(Text.colorize("~",Text.BOLD,Text.RED+Text.BRIGHT));
+      }
+      for (int j = 7; j <= 23; j++){
+        Text.go(j,40);
+        if(j%2==0) {
+        System.out.print(Text.colorize("{",Text.BOLD,Text.RED+Text.BRIGHT));
         }
-
+        else {
+          System.out.print(Text.colorize("}",Text.BOLD,Text.RED+Text.BRIGHT));
+        
+        }
+      }
+      for (int j = 2; j <= 79; j++){
+        Text.go(24,j);
+        System.out.print(Text.colorize("~",Text.BOLD,Text.RED+Text.BRIGHT));
+      }
+      Text.go(29,2);
         Text.reset();
     }
     
-
-
   //Display a line of text starting at
   //(columns and rows start at 1 (not zero) in the terminal)
   //use this method in your other text drawing methods to make things simpler.
@@ -172,9 +200,11 @@ public static void color(int m1, int m2, int m3, int m4){
     //note to self: i passed in party and enemies, is this allowed T-T
     drawBackground();
     //draw player party
-    drawParty(party, 26);
+    drawParty(party, 25);
     drawParty(enemies,2); //check indexing?
     //draw enemy party
+    Text.go(29,2);
+    Text.showCursor();
   }
 
   public static String userInput(Scanner in){
@@ -255,7 +285,7 @@ public static void color(int m1, int m2, int m3, int m4){
         partyTurn = true; //??? can we do this?
       }
       String preprompt = "Enter command for "+party.get(whichPlayer)+": attack/special/quit";
-    drawText(preprompt,29,2);
+    drawText(preprompt,28,2); //??? when time, can make prompts bold? ALL PROMPTS
     //Read user input
       input = userInput(in);
 
@@ -301,15 +331,15 @@ public static void color(int m1, int m2, int m3, int m4){
           //This is a player turn.
           //Decide where to draw the following prompt:
           String prompt = "Enter command for "+party.get(whichPlayer)+": attack/special/quit";
-          drawText(prompt,29,2);
+          drawText(prompt,28,2);
 
 
         }else{
           //This is after the player's turn, and allows the user to see the enemy turn
           //Decide where to draw the following prompt:
           String prompt = "press enter to see monster's turn";
-          TextBox(29,2,78,10,"                                                                              ");
-          drawText(prompt,29,2);
+          TextBox(28,2,78,10,"                                                                              ");
+          drawText(prompt,28,2);
 
           partyTurn = false;
           whichOpponent = 0;
@@ -342,8 +372,8 @@ public static void color(int m1, int m2, int m3, int m4){
 
         //Decide where to draw the following prompt:
         String prompt = "enemy's turn: press enter to see next turn"; //??? note to self do this!
-        TextBox(29,2,78,10,"                                                                              ");
-        TextBox(29,2,78,10,prompt); //??? how to show enemies actions
+        TextBox(8,2,78,10,"                                                                              ");
+        TextBox(28,2,78,10,prompt); //??? how to show enemies actions
         whichOpponent++;
 
       }//end of one enemy.
@@ -405,8 +435,8 @@ else {
 } //??? why dont these work
 }
 String prompt = "enemy's turn: press enter to see next turn"; //??? note to self do this!
-        TextBox(29,2,78,10,"                                                                              ");
-        TextBox(29,2,78,10,prompt);
+        TextBox(28,2,78,10,"                                                                              ");
+        TextBox(28,2,78,10,prompt);
 }
 
       //modify this if statement.
@@ -437,7 +467,7 @@ String prompt = "enemy's turn: press enter to see next turn"; //??? note to self
       drawScreen(party,enemies);
       if(party.size()==0||enemies.size() == 0){ //??? logic?
         drawScreen(party, enemies);
-        drawText("Game over. Press enter to quit",29,2); //??? this prints out of the bounds lol
+        drawText("Game over. Press enter to quit",28,2); //??? this prints out of the bounds lol
         break;
       }
     }//end of main game loop

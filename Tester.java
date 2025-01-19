@@ -4,15 +4,13 @@ public class Tester{
   private static final int HEIGHT = 30;
   private static final int BORDER_COLOR = Text.BLACK;
   private static final int BORDER_BACKGROUND = Text.WHITE + Text.BACKGROUND;
-
-    public static final String CLEAR_SCREEN = "\033[2J";
+  public static final String CLEAR_SCREEN = "\033[2J";
 
   public static void main(String[] args) {
     run();
   }
-
   public static void go(int row,int col){
-    System.out.print("\033[" + row + ";" + col + "H");
+    System.out.print("\u001b[" + row + ";" + col + "f");
 }
 
 public static int background(int color){
