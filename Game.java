@@ -212,8 +212,8 @@ public static void color(int m1, int m2, int m3, int m4){
     //draw enemy party
     
     drawText(Text.colorize("Party actions (party below)",Text.BOLD,Text.GREEN+Text.BRIGHT)
-    ,7,2);
-    drawText(Text.colorize("Enemy actions (enemies above)",Text.BOLD,Text.RED+Text.BRIGHT),7,42);
+    ,6,2);
+    drawText(Text.colorize("Enemy actions (enemies above)",Text.BOLD,Text.RED+Text.BRIGHT),6,42);
 
     Text.go(31,1);
     Text.showCursor();
@@ -236,89 +236,77 @@ public static void color(int m1, int m2, int m3, int m4){
     Text.go(31,1);
   }
 
-  public static void run(){ //death messages??
+  public static void checkDead(ArrayList<Adventurer> party, ArrayList<Adventurer> enemies) {
+    for(int i = 0; i < party.size(); i++) {
+      if(party.get(i).getHP()<=0) {
+        party.remove(i);
+        i--;
+      }
+    }
+    for(int i = 0; i < enemies.size(); i++) {
+      if(enemies.get(i).getHP()<=0) {
+        enemies.remove(i);
+        i--;
+      }
+    }
+  }
+  public static void run(){
+    // ******* INITIAL SETUP
     Text.go(31,1);
-    //Clear and initialize
     Text.hideCursor();
     Text.clear();
-    //Things to attack:
-    //Make an ArrayList of Adventurers and add 1-3 enemies to it.
-    //If only 1 enemy is added it should be the boss class.
-    //start with 1 boss and modify the code to allow 2-3 adventurers later.
+    
     ArrayList<Adventurer>enemies = new ArrayList<Adventurer>();
-    int x = (int)(Math.random()*3)+1;
-    if(x==3) {
-      enemies.add(createRandomAdventurer());
-      enemies.add(createRandomAdventurer());
-    }
-    else if(x==2) {
-    enemies.add(createRandomAdventurer());
-    enemies.add(createRandomAdventurer());
-    enemies.add(createRandomAdventurer()); //wtv swapped but works
-    }
+    int numEnemies = (int)(Math.random()*3)+1;
+    if (numEnemies==1) {
+        enemies.add(new Boss("Gordon"+(int)(Math.random()*100)));
+    } 
     else {
-      Boss newBoss = new Boss("Gordon"+(int)(Math.random()*100)); //as in gordon ramsay
-      enemies.add(newBoss);
+      for (int i=0; i < numEnemies; i++) {
+        enemies.add(createRandomAdventurer());
+      }
     }
-    //Adventurers you control:
-    //Make an ArrayList of Adventurers and add 2-4 Adventurers to it.
-    ArrayList<Adventurer> party = new ArrayList<>(); //NOTE TO SELF NAMING?? 
-    //??? shld they be random?
-    Apprentice alice = new Apprentice("Alice"+(int)(Math.random()*100));
-    Baker bob = new Baker("Bob"+(int)(Math.random()*100));
-    Charcutier cAdventurer = new Charcutier("Carmack"+(int)(Math.random()*100));
-      party.add(alice);
-      party.add(bob);
-      party.add(cAdventurer);
 
-
+    ArrayList<Adventurer> party = new ArrayList<>();
+      party.add(new Apprentice("Alice"+(int)(Math.random()*100)));
+      party.add(new Baker("Bob"+(int)(Math.random()*100)));
+      party.add(new Charcutier("Carmack"+(int)(Math.random()*100)));
     boolean partyTurn = true;
     int whichPlayer = 0;
     int whichOpponent = 0;
-    int turn = 0;
-    String input = "";//blank to get into the main loop.
+    String input = "";
     Scanner in = new Scanner(System.in);
-    //Draw the window border
 
-    //You can add parameters to draw screen!
-    drawScreen(party,enemies);//initial state.
+    drawScreen(party,enemies);
 
-    //Main loop
-
-    //display this prompt at the start of the game.
+    //********** DONE WITH SETUP */
     
-
+    
     while(! (input.equalsIgnoreCase("q") || input.equalsIgnoreCase("quit"))){
+      //******* CHECKS FOR PARTY VS ENEMY TURN */
       if(whichPlayer>=party.size()) {
         whichPlayer=0;
-        partyTurn = false; //??? can we do this?
+        partyTurn = false;
       }
       if(whichOpponent>=enemies.size()) {
         whichOpponent=0;
-        partyTurn = true; //??? can we do this?
+        partyTurn = true;
       }
-      String preprompt = "Enter command for "+party.get(whichPlayer)+": (a)ttack/(sp)ecial/(su)pport/(q)uit";
-    drawText(preprompt,28,2); //??? when time, can make prompts bold? ALL PROMPTS
-    //Read user input
-      input = userInput(in);
+      //************ DONE CHECK */
+      
+      if(partyTurn){
+        //******* CHECKING ACTION */
+        String preprompt = "Enter command for "+party.get(whichPlayer)+": (a)ttack/(sp)ecial/(su)pport/(q)uit";
+        drawText(preprompt,28,2);
+        input = userInput(in);
 
-      //example debug statment
-      //TextBox(24,2,1,78,"input: "+input+" partyTurn:"+partyTurn+ " whichPlayer="+whichPlayer+ " whichOpp="+whichOpponent );
-
-      //display event based on last turn's input
-      if(partyTurn){//??? broken attack x3 from one side???
         if(!(party.get(whichPlayer).getHP()==0)){
-
-        //TextBox(int row, int col, int width, int height, String text)
-        //Process user input for the last Adventurer:
         if(input.equals("attack") || input.equals("a")){ //?? indexing off track?
           TextBox(7,2,38,5,party.get(whichPlayer).attack(enemies.get(whichOpponent)));
         }
-
         else if(input.equals("special") || input.equals("sp")){
           TextBox(7,2,38,5,party.get(whichPlayer).specialAttack(enemies.get(whichOpponent)));
         }
-
         else if(input.startsWith("su ") || input.startsWith("support ")){
           int playerSupported = Integer.parseInt(in.next());
 
@@ -329,39 +317,40 @@ public static void color(int m1, int m2, int m3, int m4){
             TextBox(7,2,38,5,party.get(whichPlayer).support(party.get(playerSupported)));
           }
         }
+        whichPlayer++; 
         }
+        checkDead(party, enemies);
 
-        //You should decide when you want to re-ask for user input
-        //If no errors:
-        whichPlayer++; //?????
-        if(whichOpponent >= enemies.size()) {
-          partyTurn = true;
-          whichOpponent = 0;
-        }
+        //******* DONE CHECKING ACTION */
+        //**** CHECKING IF ANY PLAYERS HAVE DIED */
+        if (party.isEmpty()) {
+          drawText("Game Over! The enemies have won! Try again...", 28,2);
+          quit();
+          break;
+      } else if (enemies.isEmpty()) {
+          drawText("Congratulations! You have defeated all enemies!", 28,2);
+          quit();
+          break;
+      }
 
-
-        if(whichPlayer < party.size()){
-          //This is a player turn.
-          //Decide where to draw the following prompt:
-          String prompt = "Enter command for "+party.get(whichPlayer)+": (a)ttack/(sp)ecial/(su)pport/(q)uit";
-          drawText(prompt,28,2);
-
-
-        }else{
-          //This is after the player's turn, and allows the user to see the enemy turn
-          //Decide where to draw the following prompt:
+        if(whichPlayer >= party.size()){
           String prompt = "press enter to see monster's turn";
-          TextBox(7,41,38,5,"                                      ");
           drawText(prompt,28,2);
 
           partyTurn = false;
+          whichPlayer=0;
           whichOpponent = 0;
         }
-        //done with one party member
+        //**** DONE CHECKING IF ANY PLAYERS HAVE DIED */
+
+        
       }else{
+        drawScreen(party, enemies);
         //not the party turn!
         //enemy attacks a randomly chosen person with a randomly chosen attack.z`
         //Enemy action choices go here!
+        String pprompt = "press enter to see monster's turn";
+        drawText(pprompt,28,2);
         int randomP = (int)(Math.random()*party.size());
         int randomIndex = (int) (Math.random()*3);
         int randomEnemy = (int)(Math.random()*enemies.size());
@@ -380,13 +369,12 @@ public static void color(int m1, int m2, int m3, int m4){
             TextBox(7,42,38,5,enemies.get(randomEnemy).support());
           }
         else {
-          TextBox(7,42,38,5,enemies.get(randomEnemy).support(enemies.get(randomE))); //other support
+          TextBox(7,42,38,5,enemies.get(randomEnemy).support(enemies.get(randomE)));
         }
 
         //Decide where to draw the following prompt:
-        String prompt = "enemy's turn: press enter to see next turn"; //??? note to self do this!
-        TextBox(28,2,78,5,"                                                                              ");
-        drawText(prompt,28,2); //??? how to show enemies actions
+        String prompt = "enemy's turn: press enter to see next turn"; 
+        drawText(prompt,28,2);
         whichOpponent++;
 
       }//end of one enemy.
@@ -411,7 +399,7 @@ public static void color(int m1, int m2, int m3, int m4){
           TextBox(7,42,38,5,enemies.get(randomEnemy).support());
         }
       else {
-        TextBox(7,42,38,5,enemies.get(randomEnemy).support(enemies.get(randomE))); //other support
+        TextBox(7,42,38,5,enemies.get(randomEnemy).support(enemies.get(randomE))); 
       }
     }
   }
@@ -444,48 +432,25 @@ else if(randomIndex==2) {
     TextBox(7,42,38,5,enemies.get(randomEnemy).support());
   }
 else {
-  TextBox(7,42,38,5,enemies.get(randomEnemy).support(enemies.get(randomE))); //other support
-} //??? why dont these work
+  TextBox(7,42,38,5,enemies.get(randomEnemy).support(enemies.get(randomE))); 
+} 
 }
-String prompt = "enemy's turn: press enter to see next turn"; //??? note to self do this!
-        TextBox(28,2,78,5,"                                                                              ");
+String prompt = "enemy's turn: press enter to see next turn";
         TextBox(28,2,78,5,prompt);
 }
-
-      //modify this if statement.
-      if(!partyTurn && whichOpponent >= enemies.size()){
-        //THIS BLOCK IS TO END THE ENEMY TURN
-        //It only triggers after the last enemy goes.
-        whichPlayer = 0;
-        turn++;
-        partyTurn=true;
-        //display this prompt before player's turn
-        String prompt = "Enter command for "+party.get(whichPlayer)+": (a)ttack/(sp)ecial/(su)pport/(q)uit";
-      }
-
-      //display the updated screen after input has been processed.
-
-      for(int i = 0; i < party.size(); i++) {
-        if(party.get(i).getHP()<=0) { //??? any death messages? 
-          party.remove(i);
-          i--;
-        }
-      }
-      for(int i = 0; i < enemies.size(); i++) {
-        if(enemies.get(i).getHP()<=0) {
-          enemies.remove(i);
-          i--;
-        }
-      }
-      drawScreen(party,enemies);
-      if(party.size()==0||enemies.size() == 0){ //??? logic?
-        drawScreen(party, enemies);
-        drawText("Game over. Press enter to quit",28,2); //??? this prints out of the bounds lol
+checkDead(party, enemies);
+    if (party.isEmpty()) {
+        drawText("Game Over! The enemies have won! Try again...", 28,2);
+        quit();
         break;
-      }
-    }//end of main game loop
-
-    //After quit reset things:
+    }
+    else if (enemies.isEmpty()) {
+        drawText("Congratulations! You have defeated all enemies!", 28,2);
+        quit();
+        break;
+    }
+    }
+    
     quit();
   }
 }

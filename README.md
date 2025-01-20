@@ -35,8 +35,6 @@ Make a clear list of features that work/dont work
 
 :question: Updating screen for every attack turn
 
-:x: Optional addons for players
-
 :ballot_box_with_check: Randomized adventurer opponent names for each round (except boss)
 
 :ballot_box_with_check: Colorful and unique boundary and headers for game screen

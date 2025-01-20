@@ -154,13 +154,13 @@ restoredSpecial = x/2;
       int r = 2*this.getSpecialMax()/10;
       if(r+this.getSpecial() < this.getSpecialMax()) {
         this.setSpecial(this.getSpecial()+r);
-        return "" + this + "used Marination! Replenished " + r +" sausages!";
+        return "" + this + " used Marination! Replenished " + r +" sausages!";
       }
       else {
         int l = this.getSpecial();
         this.setHP(this.getSpecialMax());
 
-        return "" + this + "used Marination! Replenished " + (this.getSpecialMax()-l) + " sausages!";
+        return "" + this + " used Marination! Replenished " + (this.getSpecialMax()-l) + " sausages!";
       }
     }
     else {

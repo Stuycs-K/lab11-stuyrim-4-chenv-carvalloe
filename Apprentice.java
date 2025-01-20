@@ -73,7 +73,8 @@ public class Apprentice extends Adventurer{
     else{
       other.setHP(x);
     }
-      return "RECIPE SWAP" + this + " swapped HP with "+ other.getName()+ ". " + this + "new HP is " + this.getHP() + ". " + other + "new HP is " + other.getHP();
+    setSpecial(0);
+      return "RECIPE SWAP: " + this + " swapped HP with "+ other.getName()+ ". " + this + "new HP is " + this.getHP() + ". " + other + "new HP is " + other.getHP();
       }else{
       return "Not enough sauce to use the ultimate code. Instead "+attack(other);
     }
