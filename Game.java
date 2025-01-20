@@ -7,8 +7,6 @@ public class Game{//??? glitch where u go over HP for charcutier, check others,
   private static final int BORDER_COLOR = Text.BLACK;
   private static final int BORDER_BACKGROUND = Text.WHITE + Text.BACKGROUND;
 
-    public static final String CLEAR_SCREEN = "\033[2J";
-
   public static void main(String[] args) {
     run();
   }
@@ -34,9 +32,8 @@ public static void color(int m1, int m2, int m3, int m4){
 
   //Display the borders of your screen that will not change.
   //Do not write over the blank areas where text will appear or parties will appear.
-  public static void drawBackground(){ //needs work; fix the extra line @ bottom ????? and other
-    //NOTE: COPIED FROM 12-04-COLOR SCREEN W MODIFICATIONS
-    System.out.print(CLEAR_SCREEN); //is this fine?
+  public static void drawBackground(){
+    Text.clear();
 
         for(int i = 1; i <= 80; i++){
           Text.go(1,i);
@@ -139,13 +136,18 @@ public static void color(int m1, int m2, int m3, int m4){
     public static Adventurer createRandomAdventurer(){ //DOES THIS INCLUDE THE BOSS? *************
       int x = (int)(Math.random()*3);
       if(x==0) {
-      return new Apprentice("Alicia"+(int)(Math.random()*100));
+        String[] potentialNames = new String[]{"Abel","Alex","Alicia","Amelia","Anthony","Aurora","Autumn","Ava"};
+        String finName = potentialNames[(int) (Math.random()*potentialNames.length)];
+      return new Apprentice(finName+(int)(Math.random()*100));
       }
       else if(x==1) {
-
-      return new Baker("Bobby"+(int)(Math.random()*100));
+        String[] potentialNames = new String[]{"Brooks", "Brayden", "Bradley", "Brooklyn", "Bea", "Bethany", "Bonnie", "Barbara"};
+        String finName = potentialNames[(int) (Math.random()*potentialNames.length)];
+      return new Baker(finName+(int)(Math.random()*100));
       }
       else {
+        String[] potentialNames = new String[]{"Cade","Caramel","Carlos","Carnation","Cecilia","Charlotte","Clementine","Cooper"};
+        String finName = potentialNames[(int) (Math.random()*potentialNames.length)];
       return new Charcutier("Caramel"+(int)(Math.random()*100));
       }
     }
@@ -158,9 +160,10 @@ public static void color(int m1, int m2, int m3, int m4){
     *Caffeine: 20 Mana: 10   Snark: 1
     * ***THIS ROW INTENTIONALLY LEFT BLANK***
     */
-    public static void drawParty(ArrayList<Adventurer> party,int startRow){//the name is under 13 chars
+    public static void drawParty(ArrayList<Adventurer> party,int startRow, boolean isE){//the name is under 13 chars
 
       int l = party.size();
+      int ll;
       int[] coordinates = new int[l];
       for(int i = 0; i < l; i++) {
 
@@ -168,17 +171,20 @@ public static void color(int m1, int m2, int m3, int m4){
       }
       for(int i = 0; i < l; i++) {
         go(startRow,coordinates[i]);
-        drawText(party.get(i).getName(),startRow,coordinates[i]);
+        if(isE) {
+          ll = 31;
+        }
+        else {
+          ll = 32;
+        }
+    
+        drawText(Text.colorize(party.get(i).getName(),Text.BOLD,Text.INVERTED,ll),startRow,coordinates[i]);
         go(startRow+1,coordinates[i]);
         drawText("HP: "+colorByPercent(party.get(i).getHP(),party.get(i).getmaxHP())
         ,startRow+1,coordinates[i]);
         go(startRow+2,coordinates[i]);
         drawText(party.get(i).getSpecialName()+": "+colorByPercent(party.get(i).getSpecial(),party.get(i).getSpecialMax()),startRow+2,coordinates[i]);
       }
-
-      /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-      //YOUR CODE HERE
-      /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
     }
   //Use this to create a colorized number string based on the % compared to the max value.
   public static String colorByPercent(int hp, int maxHP){
@@ -191,18 +197,20 @@ public static void color(int m1, int m2, int m3, int m4){
     }
     return output;
   }
-
-
-
   //Do not write over the blank areas where text will appear.
   //Place the cursor at the place where the user will by typing their input at the end of this method.
   public static void drawScreen(ArrayList<Adventurer> party, ArrayList<Adventurer> enemies){ 
     //note to self: i passed in party and enemies, is this allowed T-T
     drawBackground();
     //draw player party
-    drawParty(party, 25);
-    drawParty(enemies,2); //check indexing?
+    drawParty(party, 25,false);
+    drawParty(enemies,2,true); //check indexing?
     //draw enemy party
+    
+    drawText(Text.colorize("Party actions (party below)",Text.BOLD,Text.GREEN+Text.BRIGHT)
+    ,7,2);
+    drawText(Text.colorize("Enemy actions (enemies above)",Text.BOLD,Text.RED+Text.BRIGHT),7,42);
+
     Text.go(29,2);
     Text.showCursor();
   }
@@ -221,7 +229,7 @@ public static void color(int m1, int m2, int m3, int m4){
   public static void quit(){
     Text.reset();
     Text.showCursor();
-    Text.go(32,1);
+    Text.go(31,1);
   }
 
   public static void run(){ //what happens to party size after dying?
@@ -245,7 +253,7 @@ public static void color(int m1, int m2, int m3, int m4){
     enemies.add(createRandomAdventurer()); //wtv swapped but works
     }
     else {
-      Boss newBoss = new Boss("GrillFiend"+(int)(Math.random()*100));
+      Boss newBoss = new Boss("Gordon"+(int)(Math.random()*100)); //as in gordon ramsay
       enemies.add(newBoss);
     }
     //Adventurers you control:
@@ -298,22 +306,22 @@ public static void color(int m1, int m2, int m3, int m4){
 
         //TextBox(int row, int col, int width, int height, String text)
         //Process user input for the last Adventurer:
-        if(input.equals("attack") || input.equals("a")){
-          TextBox(6,2,27,10,party.get(whichPlayer).attack(enemies.get(whichOpponent)));
+        if(input.equals("attack") || input.equals("a")){ //?? indexing off track?
+          TextBox(7,2,38,10,party.get(whichPlayer).attack(enemies.get(whichOpponent)));
         }
 
         else if(input.equals("special") || input.equals("sp")){
-          TextBox(6,2,27,10,party.get(whichPlayer).specialAttack(enemies.get(whichOpponent)));
+          TextBox(7,2,38,10,party.get(whichPlayer).specialAttack(enemies.get(whichOpponent)));
         }
 
         else if(input.startsWith("su ") || input.startsWith("support ")){
           int playerSupported = Integer.parseInt(in.next());
 
           if(playerSupported==whichPlayer) {
-            TextBox(6,2,78,10,party.get(whichPlayer).support());
+            TextBox(7,2,38,10,party.get(whichPlayer).support());
           }
           else {
-            TextBox(6,2,78,10,party.get(whichPlayer).support(party.get(playerSupported)));
+            TextBox(7,2,38,10,party.get(whichPlayer).support(party.get(playerSupported)));
           }
         }
         }
@@ -338,7 +346,7 @@ public static void color(int m1, int m2, int m3, int m4){
           //This is after the player's turn, and allows the user to see the enemy turn
           //Decide where to draw the following prompt:
           String prompt = "press enter to see monster's turn";
-          TextBox(28,2,78,10,"                                                                              ");
+          TextBox(7,41,38,10,"                                      ");
           drawText(prompt,28,2);
 
           partyTurn = false;
@@ -356,24 +364,24 @@ public static void color(int m1, int m2, int m3, int m4){
         if(!(party.get(randomP).getHP()==0)){ //??? assumes aliveness
         
         if(randomIndex==0) {
-          TextBox(6,2,78,10,enemies.get(randomEnemy).attack(party.get(randomP)));
+          TextBox(7,42,38,10,enemies.get(randomEnemy).attack(party.get(randomP)));
         }
         else if(randomIndex==1) {
-            TextBox(6,2,78,10,enemies.get(randomEnemy).specialAttack(party.get(randomP)));
+            TextBox(7,42,38,10,enemies.get(randomEnemy).specialAttack(party.get(randomP)));
         }
         else if(randomIndex==2) {
           int randomE = (int)(Math.random()*enemies.size());
           if(randomE == randomEnemy) {
-            TextBox(6,2,78,10,enemies.get(randomEnemy).support());
+            TextBox(7,42,38,10,enemies.get(randomEnemy).support());
           }
         else {
-          TextBox(6,2,78,10,enemies.get(randomEnemy).support(enemies.get(randomE))); //other support
+          TextBox(7,42,38,10,enemies.get(randomEnemy).support(enemies.get(randomE))); //other support
         }
 
         //Decide where to draw the following prompt:
         String prompt = "enemy's turn: press enter to see next turn"; //??? note to self do this!
-        TextBox(8,2,78,10,"                                                                              ");
-        TextBox(28,2,78,10,prompt); //??? how to show enemies actions
+        TextBox(28,2,78,10,"                                                                              ");
+        drawText(prompt,28,2); //??? how to show enemies actions
         whichOpponent++;
 
       }//end of one enemy.
@@ -387,18 +395,18 @@ public static void color(int m1, int m2, int m3, int m4){
     }
 
       if(randomIndex==0) {
-        TextBox(6,2,78,10,enemies.get(randomEnemy).attack(party.get(randomP)));
+        TextBox(7,42,38,10,enemies.get(randomEnemy).attack(party.get(randomP)));
       }
       else if(randomIndex==1) {
-          TextBox(6,2,78,10,enemies.get(randomEnemy).specialAttack(party.get(randomP)));
+          TextBox(7,42,38,10,enemies.get(randomEnemy).specialAttack(party.get(randomP)));
       }
       else if(randomIndex==2) {
         int randomE = (int)(Math.random()*enemies.size());
         if(randomE == randomEnemy) {
-          TextBox(6,2,78,10,enemies.get(randomEnemy).support());
+          TextBox(7,42,38,10,enemies.get(randomEnemy).support());
         }
       else {
-        TextBox(6,2,78,10,enemies.get(randomEnemy).support(enemies.get(randomE))); //other support
+        TextBox(7,42,38,10,enemies.get(randomEnemy).support(enemies.get(randomE))); //other support
       }
     }
   }
@@ -420,18 +428,18 @@ if(!(party.get(randomP).getHP()==0)){
 }
 
 if(randomIndex==0) {
-  TextBox(6,2,78,10,enemies.get(randomEnemy).attack(party.get(randomP)));
+  TextBox(7,42,38,10,enemies.get(randomEnemy).attack(party.get(randomP)));
 }
 else if(randomIndex==1) {
-    TextBox(6,2,78,10,enemies.get(randomEnemy).specialAttack(party.get(randomP)));
+    TextBox(7,41,38,10,enemies.get(randomEnemy).specialAttack(party.get(randomP)));
 }
 else if(randomIndex==2) {
   int randomE = (int)(Math.random()*enemies.size());
   if(randomE == randomEnemy) {
-    TextBox(6,2,78,10,enemies.get(randomEnemy).support());
+    TextBox(7,42,38,10,enemies.get(randomEnemy).support());
   }
 else {
-  TextBox(6,2,78,10,enemies.get(randomEnemy).support(enemies.get(randomE))); //other support
+  TextBox(7,42,38,10,enemies.get(randomEnemy).support(enemies.get(randomE))); //other support
 } //??? why dont these work
 }
 String prompt = "enemy's turn: press enter to see next turn"; //??? note to self do this!
@@ -477,3 +485,6 @@ String prompt = "enemy's turn: press enter to see next turn"; //??? note to self
   }
 }
 }
+
+//Enemy actions (enemies above)
+//Party actions (party below)
