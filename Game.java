@@ -2,10 +2,6 @@ import java.util.*;
 public class Game{//??? glitch where u go over HP for charcutier, check others,
   //??? use methods from Adventurer as needed
   //?????? MAJOR PROBLEM WITH OPPOSING SIDE'S NUMBER CHOSEN (THE 1-5)
-  private static final int WIDTH = 80;
-  private static final int HEIGHT = 30;
-  private static final int BORDER_COLOR = Text.BLACK;
-  private static final int BORDER_BACKGROUND = Text.WHITE + Text.BACKGROUND;
 
   public static void main(String[] args) {
     run();
@@ -102,7 +98,7 @@ public static void color(int m1, int m2, int m3, int m4){
   //use this method in your other text drawing methods to make things simpler.
   public static void drawText(String s,int startRow, int startCol){
     go(startRow, startCol);
-    System.out.print(s);
+    System.out.println(s);
   }
 
   /*Use this method to place text on the screen at a particular location.
@@ -213,10 +209,22 @@ public static void color(int m1, int m2, int m3, int m4){
     
     drawText(Text.colorize("Party actions (party below)",Text.BOLD,Text.GREEN+Text.BRIGHT)
     ,6,2);
-    drawText(Text.colorize("Enemy actions (enemies above)",Text.BOLD,Text.RED+Text.BRIGHT),6,42);
+    drawText(Text.colorize("Enemy actions (enemies above)",Text.BOLD,Text.RED+Text.BRIGHT),6,41);
 
     Text.go(31,1);
     Text.showCursor();
+  }
+  public static void TextBoxR(int row, int col, int width, int height, ArrayList<String> text) {
+    int size = text.size();
+    int addRow = 0;
+    for(int i = 0; i < size; i++) {
+      String m = text.get(i);
+      TextBox(row+addRow,col,width,height,m);
+      if(m.length() % width != 0) {
+        addRow+=1;
+      }
+      addRow += m.length()/width;
+    }
   }
 //??? add updating?
   public static String userInput(Scanner in){
@@ -278,6 +286,7 @@ public static void color(int m1, int m2, int m3, int m4){
     Scanner in = new Scanner(System.in);
 
     drawScreen(party,enemies);
+    ArrayList<String> partyTW = new ArrayList<String>();
 
     //********** DONE WITH SETUP */
     
@@ -292,7 +301,7 @@ public static void color(int m1, int m2, int m3, int m4){
         whichOpponent=0;
         partyTurn = true;
       }
-      //************ DONE CHECK */
+      //************ DONE CHECKING FOR PARTY/ENEMY TURN */
       
       if(partyTurn){
         //******* CHECKING ACTION */
@@ -302,26 +311,34 @@ public static void color(int m1, int m2, int m3, int m4){
 
         if(!(party.get(whichPlayer).getHP()==0)){
         if(input.equals("attack") || input.equals("a")){ //?? indexing off track?
-          TextBox(7,2,38,5,party.get(whichPlayer).attack(enemies.get(whichOpponent)));
+          partyTW.add(party.get(whichPlayer).attack(enemies.get(whichOpponent)));
         }
         else if(input.equals("special") || input.equals("sp")){
-          TextBox(7,2,38,5,party.get(whichPlayer).specialAttack(enemies.get(whichOpponent)));
+          partyTW.add(party.get(whichPlayer).specialAttack(enemies.get(whichOpponent)));
         }
         else if(input.startsWith("su ") || input.startsWith("support ")){
-          int playerSupported = Integer.parseInt(in.next());
-
-          if(playerSupported==whichPlayer) {
-            TextBox(7,2,38,5,party.get(whichPlayer).support());
+          String[] supportStringSplot = input.split(" ");
+          if(supportStringSplot.length < 2) {
+          partyTW.add(party.get(whichPlayer).support());
           }
           else {
-            TextBox(7,2,38,5,party.get(whichPlayer).support(party.get(playerSupported)));
-          }
+            int playerSupported = Integer.parseInt(supportStringSplot[1]);
+            if(playerSupported==whichPlayer||playerSupported >= party.size()) { //??? can i do this
+          partyTW.add(party.get(whichPlayer).support());
+            }
+            else {
+          partyTW.add(party.get(whichPlayer).support(party.get(playerSupported)));
+            }
+          } 
         }
         whichPlayer++; 
         }
         checkDead(party, enemies);
-
+        drawScreen(party, enemies);
+        TextBoxR(7,3,37,13,partyTW);
         //******* DONE CHECKING ACTION */
+
+        
         //**** CHECKING IF ANY PLAYERS HAVE DIED */
         if (party.isEmpty()) {
           drawText("Game Over! The enemies have won! Try again...", 28,2);
@@ -332,15 +349,18 @@ public static void color(int m1, int m2, int m3, int m4){
           quit();
           break;
       }
+      
 
         if(whichPlayer >= party.size()){
-          String prompt = "press enter to see monster's turn";
+          String prompt = "Press enter to see opponent's turn:";
           drawText(prompt,28,2);
 
           partyTurn = false;
           whichPlayer=0;
           whichOpponent = 0;
+          partyTW.clear();
         }
+        
         //**** DONE CHECKING IF ANY PLAYERS HAVE DIED */
 
         

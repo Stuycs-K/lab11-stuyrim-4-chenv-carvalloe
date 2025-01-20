@@ -1,7 +1,8 @@
 public class Apprentice extends Adventurer{
   int sauce, sauceMax;
 
-  private String[] prepItems = new String[]{"coffee beans", "sliced cherry tomatoes", "sushi rice"};
+  private String[] prepItems = new String[]{"coffee beans", "sliced cherry tomatoes", "sushi rice", 
+"leftover soup", "stale bread", "apple pie"};
 
   /*the other constructors ultimately call the constructor
   *with all parameters.*/
@@ -47,8 +48,9 @@ public class Apprentice extends Adventurer{
   /*Deal 2-7 damage to opponent, restores 2 sauce*/
   public String attack(Adventurer other){
     int damage = (int)((Math.random()*2) + 1);
+    int item = (int) (Math.random()*6);
     other.applyDamage(damage);
-    return "PREP WORK:" + this + " attacked "+ other + " and dealt "+ damage +
+    return "PREP WORK:" + this + " attacked "+ other + " using " + prepItems[item] + " and dealt "+ damage +
     " points of damage.";
   }
 
@@ -98,11 +100,11 @@ public class Apprentice extends Adventurer{
     if (getHP() + 2 >= 15)
     {
       setHP(15);
-      return "STOCK RELIEF: stock full";
+      return "STOCK RELIEF: " + this + "'s HP is now full!";
     }
     else{
     setHP(getHP()+this.getHP());
-    return this+" STOCK RELIEF: "+this.getHP()+" HP";
+    return this+" STOCK RELIEF: " + this + "'s points is now set to "+this.getHP()+" HP!";
   }
   }
 }

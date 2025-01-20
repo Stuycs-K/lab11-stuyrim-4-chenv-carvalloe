@@ -107,25 +107,8 @@ public class Charcutier extends Adventurer{
   and integer division is used (up to maximums).*/
   public String support(Adventurer other){
     Scanner scanner = new Scanner(System.in);
-    int y;
-    System.out.println("Please choose an int between 1 and 5:");
-
-    while (true) {
-        if (scanner.hasNextInt()) {
-            y = scanner.nextInt();
-            if (y >= 1 && y <= 5) {
-                break;
-            } else {
-                System.out.println("Invalid selection; you're trying to break the system! Please choose an int between 1 and 5.");
-            }
-        } else {
-            System.out.println("Invalid input; please enter an int, not whatever was written.");
-            scanner.next();
-        }
-    }
-
-  Random random = new Random();
-  int z = random.nextInt(5) + 1;
+  int y = (int) (Math.random()*5)+1;
+  int z = (int) (Math.random()*5)+1;
   int l = (z/y + 1);
       int x = y*l;
       int restoredHealth;

@@ -1,4 +1,3 @@
-import java.util.Random;
 public abstract class Adventurer{
   private String name;
   private int HP,maxHP;
