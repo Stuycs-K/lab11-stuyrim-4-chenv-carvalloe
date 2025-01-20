@@ -133,7 +133,7 @@ public static void color(int m1, int m2, int m3, int m4){
 
     //return a random adventurer (choose between all available subclasses)
     //feel free to overload this method to allow specific names/stats.
-    public static Adventurer createRandomAdventurer(){ //DOES THIS INCLUDE THE BOSS? *************
+    public static Adventurer createRandomAdventurer(){
       int x = (int)(Math.random()*3);
       if(x==0) {
         String[] potentialNames = new String[]{"Abel","Alex","Alicia","Amelia","Anthony","Aurora","Autumn","Ava"};
@@ -148,7 +148,7 @@ public static void color(int m1, int m2, int m3, int m4){
       else {
         String[] potentialNames = new String[]{"Cade","Caramel","Carlos","Carnation","Cecilia","Charlotte","Clementine","Cooper"};
         String finName = potentialNames[(int) (Math.random()*potentialNames.length)];
-      return new Charcutier("Caramel"+(int)(Math.random()*100));
+      return new Charcutier(finName+(int)(Math.random()*100));
       }
     }
     /*Display a List of 2-4 adventurers on the rows row through row+3 (4 rows max)
@@ -232,9 +232,8 @@ public static void color(int m1, int m2, int m3, int m4){
     Text.go(31,1);
   }
 
-  public static void run(){ //what happens to party size after dying?
+  public static void run(){ //death messages??
     //Clear and initialize
-    //?? made text 78 wide, correct?
     Text.hideCursor();
     Text.clear();
     //Things to attack:
@@ -292,7 +291,7 @@ public static void color(int m1, int m2, int m3, int m4){
         whichOpponent=0;
         partyTurn = true; //??? can we do this?
       }
-      String preprompt = "Enter command for "+party.get(whichPlayer)+": attack/special/quit";
+      String preprompt = "Enter command for "+party.get(whichPlayer)+": (a)ttack/(sp)ecial/(su)pport/(q)uit";
     drawText(preprompt,28,2); //??? when time, can make prompts bold? ALL PROMPTS
     //Read user input
       input = userInput(in);
@@ -338,7 +337,7 @@ public static void color(int m1, int m2, int m3, int m4){
         if(whichPlayer < party.size()){
           //This is a player turn.
           //Decide where to draw the following prompt:
-          String prompt = "Enter command for "+party.get(whichPlayer)+": attack/special/quit";
+          String prompt = "Enter command for "+party.get(whichPlayer)+": (a)ttack/(sp)ecial/(su)pport/(q)uit";
           drawText(prompt,28,2);
 
 
@@ -455,7 +454,7 @@ String prompt = "enemy's turn: press enter to see next turn"; //??? note to self
         turn++;
         partyTurn=true;
         //display this prompt before player's turn
-        String prompt = "Enter command for "+party.get(whichPlayer)+": attack/special/quit";
+        String prompt = "Enter command for "+party.get(whichPlayer)+": (a)ttack/(sp)ecial/(su)pport/(q)uit";
       }
 
       //display the updated screen after input has been processed.
@@ -485,6 +484,3 @@ String prompt = "enemy's turn: press enter to see next turn"; //??? note to self
   }
 }
 }
-
-//Enemy actions (enemies above)
-//Party actions (party below)
