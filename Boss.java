@@ -49,7 +49,7 @@ public class Boss extends Adventurer{
     other.applyDamage(damage);
     this.applyDamage(10 - damage);
     return "HOT OIL SPILL: " + this + " attacked "+ other + " and dealt "+ damage +
-    " points of damage. And lost" + (10 - damage) + "points";
+    " points of damage, losing " + (10 - damage) + "points";
   }
 
   public String specialAttack(Adventurer other){
@@ -58,7 +58,7 @@ public class Boss extends Adventurer{
       this.setSpecial(this.getSpecial() - 20);
       return "IDIOT SANDWICH: " + this + " eliminated "+other.getSpecialName() + " of "+other + " and lost 20 " + this.getSpecialName();
     }else{
-      return "Not enough salt. Instead "+attack(other);
+      return "Not enough salt. Instead: "+attack(other);
     }
 
   }

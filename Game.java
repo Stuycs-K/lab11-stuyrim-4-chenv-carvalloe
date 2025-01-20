@@ -78,7 +78,7 @@ public static void color(int m1, int m2, int m3, int m4){
         Text.go(6,j);
         System.out.print(Text.colorize("~",Text.BOLD,Text.RED+Text.BRIGHT));
       }
-      for (int j = 7; j <= 23; j++){
+      for (int j = 7; j <= 24; j++){
         Text.go(j,40);
         if(j%2==0) {
         System.out.print(Text.colorize("{",Text.BOLD,Text.RED+Text.BRIGHT));
@@ -89,10 +89,11 @@ public static void color(int m1, int m2, int m3, int m4){
         }
       }
       for (int j = 2; j <= 79; j++){
-        Text.go(24,j);
+        Text.go(25,j);
         System.out.print(Text.colorize("~",Text.BOLD,Text.RED+Text.BRIGHT));
       }
-      Text.go(29,2);
+      Text.go(31,1);
+      System.out.println(" ");
         Text.reset();
     }
     
@@ -115,6 +116,9 @@ public static void color(int m1, int m2, int m3, int m4){
   *@param height the number of rows
   */
   public static void TextBox(int row, int col, int width, int height, String text){
+    if(height==0) {
+      return;
+    }
     for(int i = row; i < row+width; i++) {
       for(int j = col; j < col+height; j++) {
         go(i,j);
@@ -204,17 +208,17 @@ public static void color(int m1, int m2, int m3, int m4){
     drawBackground();
     //draw player party
     drawParty(party, 25,false);
-    drawParty(enemies,2,true); //check indexing?
+    drawParty(enemies,1,true); //check indexing?
     //draw enemy party
     
     drawText(Text.colorize("Party actions (party below)",Text.BOLD,Text.GREEN+Text.BRIGHT)
     ,7,2);
     drawText(Text.colorize("Enemy actions (enemies above)",Text.BOLD,Text.RED+Text.BRIGHT),7,42);
 
-    Text.go(29,2);
+    Text.go(31,1);
     Text.showCursor();
   }
-
+//??? add updating?
   public static String userInput(Scanner in){
       //Move cursor to prompt location
       Text.go(31,1);
@@ -233,6 +237,7 @@ public static void color(int m1, int m2, int m3, int m4){
   }
 
   public static void run(){ //death messages??
+    Text.go(31,1);
     //Clear and initialize
     Text.hideCursor();
     Text.clear();
@@ -257,7 +262,8 @@ public static void color(int m1, int m2, int m3, int m4){
     }
     //Adventurers you control:
     //Make an ArrayList of Adventurers and add 2-4 Adventurers to it.
-    ArrayList<Adventurer> party = new ArrayList<>(); //NOTE TO SELF NAMING??
+    ArrayList<Adventurer> party = new ArrayList<>(); //NOTE TO SELF NAMING?? 
+    //??? shld they be random?
     Apprentice alice = new Apprentice("Alice"+(int)(Math.random()*100));
     Baker bob = new Baker("Bob"+(int)(Math.random()*100));
     Charcutier cAdventurer = new Charcutier("Carmack"+(int)(Math.random()*100));
@@ -306,21 +312,21 @@ public static void color(int m1, int m2, int m3, int m4){
         //TextBox(int row, int col, int width, int height, String text)
         //Process user input for the last Adventurer:
         if(input.equals("attack") || input.equals("a")){ //?? indexing off track?
-          TextBox(7,2,38,10,party.get(whichPlayer).attack(enemies.get(whichOpponent)));
+          TextBox(7,2,38,5,party.get(whichPlayer).attack(enemies.get(whichOpponent)));
         }
 
         else if(input.equals("special") || input.equals("sp")){
-          TextBox(7,2,38,10,party.get(whichPlayer).specialAttack(enemies.get(whichOpponent)));
+          TextBox(7,2,38,5,party.get(whichPlayer).specialAttack(enemies.get(whichOpponent)));
         }
 
         else if(input.startsWith("su ") || input.startsWith("support ")){
           int playerSupported = Integer.parseInt(in.next());
 
           if(playerSupported==whichPlayer) {
-            TextBox(7,2,38,10,party.get(whichPlayer).support());
+            TextBox(7,2,38,5,party.get(whichPlayer).support());
           }
           else {
-            TextBox(7,2,38,10,party.get(whichPlayer).support(party.get(playerSupported)));
+            TextBox(7,2,38,5,party.get(whichPlayer).support(party.get(playerSupported)));
           }
         }
         }
@@ -345,7 +351,7 @@ public static void color(int m1, int m2, int m3, int m4){
           //This is after the player's turn, and allows the user to see the enemy turn
           //Decide where to draw the following prompt:
           String prompt = "press enter to see monster's turn";
-          TextBox(7,41,38,10,"                                      ");
+          TextBox(7,41,38,5,"                                      ");
           drawText(prompt,28,2);
 
           partyTurn = false;
@@ -363,23 +369,23 @@ public static void color(int m1, int m2, int m3, int m4){
         if(!(party.get(randomP).getHP()==0)){ //??? assumes aliveness
         
         if(randomIndex==0) {
-          TextBox(7,42,38,10,enemies.get(randomEnemy).attack(party.get(randomP)));
+          TextBox(7,42,38,5,enemies.get(randomEnemy).attack(party.get(randomP)));
         }
         else if(randomIndex==1) {
-            TextBox(7,42,38,10,enemies.get(randomEnemy).specialAttack(party.get(randomP)));
+            TextBox(7,42,38,5,enemies.get(randomEnemy).specialAttack(party.get(randomP)));
         }
         else if(randomIndex==2) {
           int randomE = (int)(Math.random()*enemies.size());
           if(randomE == randomEnemy) {
-            TextBox(7,42,38,10,enemies.get(randomEnemy).support());
+            TextBox(7,42,38,5,enemies.get(randomEnemy).support());
           }
         else {
-          TextBox(7,42,38,10,enemies.get(randomEnemy).support(enemies.get(randomE))); //other support
+          TextBox(7,42,38,5,enemies.get(randomEnemy).support(enemies.get(randomE))); //other support
         }
 
         //Decide where to draw the following prompt:
         String prompt = "enemy's turn: press enter to see next turn"; //??? note to self do this!
-        TextBox(28,2,78,10,"                                                                              ");
+        TextBox(28,2,78,5,"                                                                              ");
         drawText(prompt,28,2); //??? how to show enemies actions
         whichOpponent++;
 
@@ -394,18 +400,18 @@ public static void color(int m1, int m2, int m3, int m4){
     }
 
       if(randomIndex==0) {
-        TextBox(7,42,38,10,enemies.get(randomEnemy).attack(party.get(randomP)));
+        TextBox(7,42,38,5,enemies.get(randomEnemy).attack(party.get(randomP)));
       }
       else if(randomIndex==1) {
-          TextBox(7,42,38,10,enemies.get(randomEnemy).specialAttack(party.get(randomP)));
+          TextBox(7,42,38,5,enemies.get(randomEnemy).specialAttack(party.get(randomP)));
       }
       else if(randomIndex==2) {
         int randomE = (int)(Math.random()*enemies.size());
         if(randomE == randomEnemy) {
-          TextBox(7,42,38,10,enemies.get(randomEnemy).support());
+          TextBox(7,42,38,5,enemies.get(randomEnemy).support());
         }
       else {
-        TextBox(7,42,38,10,enemies.get(randomEnemy).support(enemies.get(randomE))); //other support
+        TextBox(7,42,38,5,enemies.get(randomEnemy).support(enemies.get(randomE))); //other support
       }
     }
   }
@@ -427,23 +433,23 @@ if(!(party.get(randomP).getHP()==0)){
 }
 
 if(randomIndex==0) {
-  TextBox(7,42,38,10,enemies.get(randomEnemy).attack(party.get(randomP)));
+  TextBox(7,42,38,5,enemies.get(randomEnemy).attack(party.get(randomP)));
 }
 else if(randomIndex==1) {
-    TextBox(7,41,38,10,enemies.get(randomEnemy).specialAttack(party.get(randomP)));
+    TextBox(7,41,38,5,enemies.get(randomEnemy).specialAttack(party.get(randomP)));
 }
 else if(randomIndex==2) {
   int randomE = (int)(Math.random()*enemies.size());
   if(randomE == randomEnemy) {
-    TextBox(7,42,38,10,enemies.get(randomEnemy).support());
+    TextBox(7,42,38,5,enemies.get(randomEnemy).support());
   }
 else {
-  TextBox(7,42,38,10,enemies.get(randomEnemy).support(enemies.get(randomE))); //other support
+  TextBox(7,42,38,5,enemies.get(randomEnemy).support(enemies.get(randomE))); //other support
 } //??? why dont these work
 }
 String prompt = "enemy's turn: press enter to see next turn"; //??? note to self do this!
-        TextBox(28,2,78,10,"                                                                              ");
-        TextBox(28,2,78,10,prompt);
+        TextBox(28,2,78,5,"                                                                              ");
+        TextBox(28,2,78,5,prompt);
 }
 
       //modify this if statement.
