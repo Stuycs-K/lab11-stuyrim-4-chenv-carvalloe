@@ -50,7 +50,7 @@ public class Apprentice extends Adventurer{
     int damage = (int)((Math.random()*2) + 1);
     int item = (int) (Math.random()*6);
     other.applyDamage(damage);
-    return "PREP WORK:" + this + " attacked "+ other + " using " + prepItems[item] + " and dealt "+ damage +
+    return "PREP WORK: " + this + " attacked "+ other + " using " + prepItems[item] + " and dealt "+ damage +
     " points of damage.";
   }
 
@@ -76,7 +76,7 @@ public class Apprentice extends Adventurer{
       other.setHP(x);
     }
     setSpecial(0);
-      return "RECIPE SWAP: " + this + " swapped HP with "+ other.getName()+ ". " + this + "new HP is " + this.getHP() + ". " + other + "new HP is " + other.getHP();
+      return "RECIPE SWAP: " + this + " swapped HP with "+ other.getName()+ ". " + this + "'s new HP is " + this.getHP() + ". " + other + "'s new HP is " + other.getHP() + ".";
       }else{
       return "Not enough sauce to use the ultimate code. Instead "+attack(other);
     }
@@ -86,13 +86,12 @@ public class Apprentice extends Adventurer{
     int x = (int)((Math.random() * 4) + 1);
     if(other.getHP()+x <= other.getmaxHP()) {
     other.setHP(other.getHP()+x);
-    return "LAST MINUTE FIX: gives sauce to "+other+" and restores HP to " + other.getHP();
+    return "LAST MINUTE FIX: " + this + " gives sauce to "+other+" and restores HP to " + other.getHP();
   }
   else {
     x = other.getmaxHP()-other.getHP();
     other.setHP(other.getHP()+x);
     return "LAST MINUTE FIX: gives sauce to "+other+" and restores HP to " + other.getHP();
-
   }
 
 }

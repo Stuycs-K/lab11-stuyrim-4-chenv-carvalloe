@@ -88,7 +88,7 @@ public class Baker extends Adventurer{
   // figured it out will continue working on it
   public String support(Adventurer other){
     other.changeSupported();
-    return "SHORTCAKE SHIELD: Blocked 50% of damage to "+other+" for next two turns";
+    return "SHORTCAKE SHIELD: " + this + " Blocked 50% of damage to "+other+" for next two turns";
   }
 
   public String support(){
@@ -97,7 +97,7 @@ public class Baker extends Adventurer{
       int s = 15-getSpecial();
       setSpecial(15);
 
-      return "SUGAR RUSH: Using the enthusiasm of a sugar rush, " + this + " restores " + s+  " leaveners.";
+      return "SUGAR RUSH: Using the enthusiasm of a sugar rush, " + this + " restores " + s +  " leaveners.";
     }
     else
     {

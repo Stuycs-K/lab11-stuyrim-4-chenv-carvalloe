@@ -43,7 +43,7 @@ public static void color(int m1, int m2, int m3, int m4){
         }
 
         for (int j = 1; j <= 30; j++) {
-          go(j, 1);
+          Text.go(j, 1);
           if(j%2 == 1) {
             System.out.print(Text.colorize("/",Text.BOLD,Text.RED+Text.BRIGHT));
           }
@@ -58,7 +58,7 @@ public static void color(int m1, int m2, int m3, int m4){
             System.out.print(Text.colorize("/",Text.BOLD,Text.RED+Text.BRIGHT));
           }
           
-          for(int i = 1; i <= 80; i++){
+          for(int i = 0; i <= 80; i++){
             Text.go(30,i);
             if(i%2 == 1) {
               System.out.print(Text.colorize("\\",Text.BOLD,Text.RED+Text.BRIGHT));
@@ -284,6 +284,8 @@ public static void color(int m1, int m2, int m3, int m4){
     int whichOpponent = 0;
     String input = "";
     Scanner in = new Scanner(System.in);
+    boolean justFinishedEnemy = false;
+    boolean justFinishedParty = false;
 
     drawScreen(party,enemies);
     ArrayList<String> partyTW = new ArrayList<String>();
@@ -297,48 +299,97 @@ public static void color(int m1, int m2, int m3, int m4){
       if(whichPlayer>=party.size()) {
         whichPlayer=0;
         partyTurn = false;
+        justFinishedParty = true;
       }
       if(whichOpponent>=enemies.size()) {
         whichOpponent=0;
         partyTurn = true;
+        justFinishedEnemy = true;
       }
       //************ DONE CHECKING FOR PARTY/ENEMY TURN */
+
+      drawScreen(party, enemies);
+        TextBoxR(7,2,37,13,partyTW);
+        TextBoxR(7,41,38,13,enemyTW);
       
       if(partyTurn){
+        if(justFinishedEnemy) {
+          justFinishedEnemy = false;
+          String enterPrompt = "party's turn: press enter to start next turn"; 
+          TextBox(28,2,70,1,enterPrompt);
+        }
+        else {
+          partyTW.clear();
         enemyTW.clear();
         //******* CHECKING ACTION */
-        String preprompt = "Enter command for "+party.get(whichPlayer)+": (a)ttack/(sp)ecial/(su)pport/(q)uit";
+        String preprompt = "Enter command for "+party.get(whichPlayer)+": (a)ttack/(sp)ecial/(su)pport/(q)uit [player #]";
         drawText(preprompt,28,2);
         input = userInput(in);
-
+        
         if(!(party.get(whichPlayer).getHP()==0)){
-        if(input.equals("attack") || input.equals("a")){ //?? indexing off track?
-          partyTW.add(party.get(whichPlayer).attack(enemies.get(whichOpponent)));
-        }
-        else if(input.equals("special") || input.equals("sp")){
-          partyTW.add(party.get(whichPlayer).specialAttack(enemies.get(whichOpponent)));
-        }
-        else if(input.startsWith("su ") || input.startsWith("support ")){
+        if(input.startsWith("attack") || input.startsWith("a")){
           String[] supportStringSplot = input.split(" ");
-          if(supportStringSplot.length < 2) {
-          partyTW.add(party.get(whichPlayer).support());
+          if(supportStringSplot.length == 1) {
+            partyTW.add("you need to select a player #, please try again.");
+          whichPlayer--;
           }
-          else {
+          if(supportStringSplot.length >= 2) {
             int playerSupported = Integer.parseInt(supportStringSplot[1]);
-            if(playerSupported==whichPlayer||playerSupported >= party.size()) { //??? can i do this
-          partyTW.add(party.get(whichPlayer).support());
+            if(playerSupported >= enemies.size() || playerSupported < 0) {
+              partyTW.add("your input went out of bounds, please try again.");
+          whichPlayer--;
             }
             else {
-          partyTW.add(party.get(whichPlayer).support(party.get(playerSupported)));
+              partyTW.add(party.get(whichPlayer).attack(enemies.get(playerSupported)));
             }
           } 
+        }
+        else if(input.startsWith("special") || input.startsWith("sp")){
+          String[] supportStringSplot = input.split(" ");
+          if(supportStringSplot.length == 1) {
+            partyTW.add("you need to select a player #, please try again.");
+          whichPlayer--;
+          }
+          if(supportStringSplot.length >= 2) {
+            int playerSupported = Integer.parseInt(supportStringSplot[1]);
+            if(playerSupported >= enemies.size() || playerSupported < 0) {
+              partyTW.add("your input went out of bounds, please try again.");
+          whichPlayer--;
+            }
+            else {
+              partyTW.add(party.get(whichPlayer).specialAttack(enemies.get(playerSupported)));
+            }
+          } 
+        }
+        else if(input.startsWith("su") || input.startsWith("support")){
+          String[] supportStringSplot = input.split(" ");
+          if(supportStringSplot.length == 1) {
+            partyTW.add("you need to select a player #, please try again.");
+          whichPlayer--;
+          }
+          if(supportStringSplot.length >= 2) {
+            int playerSupported = Integer.parseInt(supportStringSplot[1]);
+            if(playerSupported==whichPlayer) { //??? can i do this
+              partyTW.add(party.get(whichPlayer).support());
+            }
+            else if(playerSupported >= party.size() || playerSupported < 0) {
+              partyTW.add("your input went out of bounds, please try again.");
+          whichPlayer--;
+            }
+            else {
+              partyTW.add(party.get(whichPlayer).support(party.get(playerSupported)));
+            }
+          } 
+        }
+        else {
+          partyTW.add("your input did not match the requirements, please try again.");
+          whichPlayer--;
         }
         whichPlayer++; 
         }
         checkDead(party, enemies);
-        drawScreen(party, enemies);
-        TextBoxR(7,2,37,13,partyTW);
         //******* DONE CHECKING ACTION */
+      }
 
         
         //**** CHECKING IF ANY PLAYERS HAVE DIED */
@@ -361,9 +412,27 @@ public static void color(int m1, int m2, int m3, int m4){
           whichOpponent = 0;
         }
         //**** DONE CHECKING IF ANY PLAYERS HAVE DIED */
+
+        if(whichPlayer >= party.size()){
+          //This is a player turn.
+          //Decide where to draw the following prompt:
+          //This is after the player's turn, and allows the user to see the enemy turn
+          //Decide where to draw the following prompt:
+          String prompt = "press enter to see monster's turn";
+          TextBox(26,2, 78, 2, prompt);
+          partyTurn = false;
+          whichOpponent = 0;
+        }
+
       }
       else{
-        partyTW.clear();
+        if(justFinishedParty) {
+          justFinishedParty = false;
+          String enterPrompt = "enemy's turn: press enter to see opponent moves"; 
+          TextBox(28,2,70,1,enterPrompt);
+          System.out.flush();
+        }
+        else {
         checkDead(party, enemies);
         drawScreen(party, enemies);
         int randomP = (int)(Math.random()*party.size());
@@ -387,10 +456,11 @@ public static void color(int m1, int m2, int m3, int m4){
       }
       whichOpponent++;
       checkDead(party, enemies);
-      drawScreen(party, enemies);
-      String enemyPrompt = "enemy's turn: press enter to see next turn"; 
-      TextBox(28,2,70,1,enemyPrompt);
-      TextBoxR(7,42,37,13,enemyTW);
+      // drawScreen(party, enemies);
+      // String enemyPrompt = "enemy's turn: press enter to see next turn"; 
+      // TextBox(28,2,70,1,enemyPrompt);
+      // TextBoxR(7,42,37,13,enemyTW);
+      System.out.flush();
 
     if (party.isEmpty()) {
         drawText("Game Over! The enemies have won! Try again...", 28,2);
@@ -403,6 +473,7 @@ public static void color(int m1, int m2, int m3, int m4){
         break;
     }
     }
+  }
   quit();
   }
 }

@@ -110,17 +110,20 @@ public class Charcutier extends Adventurer{
       int restoredHealth;
       int restoredSpecial;
       if(other.getHP() + x < other.getmaxHP()) {
-restoredHealth = x;
+        restoredHealth = x;
       }
       else {
-restoredHealth = other.getmaxHP()-other.getHP();
+        restoredHealth = other.getmaxHP()-other.getHP();
       }
+
       if(other.getSpecial() + x/2 < other.getSpecialMax()) {
-restoredSpecial = x/2;
-        }
+        restoredSpecial = x/2;
+      }
         else {
- restoredSpecial = other.getSpecialMax()-other.getSpecial();
+          restoredSpecial = other.getSpecialMax()-other.getSpecial();
         }
+        other.setHP(other.getHP()+restoredHealth);
+        other.setSpecial(other.getSpecial()+restoredSpecial);
       return "CURED EDGE: restored " + restoredHealth + " HP points and " + restoredSpecial +
       " special points for " + other + "!";
   }
