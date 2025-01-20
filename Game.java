@@ -115,8 +115,8 @@ public static void color(int m1, int m2, int m3, int m4){
     if(height==0) {
       return;
     }
-    for(int i = row; i < row+width; i++) {
-      for(int j = col; j < col+height; j++) {
+    for(int i = row; i < row+height; i++) {
+      for(int j = col; j < col+width; j++) {
         go(i,j);
         System.out.print(" ");
       }
@@ -219,7 +219,7 @@ public static void color(int m1, int m2, int m3, int m4){
     int addRow = 0;
     for(int i = 0; i < size; i++) {
       String m = text.get(i);
-      TextBox(row+addRow,col,width,height,m);
+      TextBox(row+addRow,col,width,height-addRow,m);
       if(m.length() % width != 0) {
         addRow+=1;
       }
@@ -287,6 +287,7 @@ public static void color(int m1, int m2, int m3, int m4){
 
     drawScreen(party,enemies);
     ArrayList<String> partyTW = new ArrayList<String>();
+    ArrayList<String> enemyTW = new ArrayList<String>();
 
     //********** DONE WITH SETUP */
     
@@ -304,6 +305,7 @@ public static void color(int m1, int m2, int m3, int m4){
       //************ DONE CHECKING FOR PARTY/ENEMY TURN */
       
       if(partyTurn){
+        enemyTW.clear();
         //******* CHECKING ACTION */
         String preprompt = "Enter command for "+party.get(whichPlayer)+": (a)ttack/(sp)ecial/(su)pport/(q)uit";
         drawText(preprompt,28,2);
@@ -335,130 +337,61 @@ public static void color(int m1, int m2, int m3, int m4){
         }
         checkDead(party, enemies);
         drawScreen(party, enemies);
-        TextBoxR(7,3,37,13,partyTW);
+        TextBoxR(7,2,37,13,partyTW);
         //******* DONE CHECKING ACTION */
 
         
         //**** CHECKING IF ANY PLAYERS HAVE DIED */
-        if (party.isEmpty()) {
+      if (party.isEmpty()) {
           drawText("Game Over! The enemies have won! Try again...", 28,2);
           quit();
           break;
-      } else if (enemies.isEmpty()) {
+      } 
+      else if (enemies.isEmpty()) {
           drawText("Congratulations! You have defeated all enemies!", 28,2);
           quit();
           break;
       }
-      
-
-        if(whichPlayer >= party.size()){
-          String prompt = "Press enter to see opponent's turn:";
-          drawText(prompt,28,2);
+        if(whichPlayer > party.size()){
+          String enemyPrompt = "enemy's turn: press enter to see next turn"; 
+          TextBox(28,2,70,1,enemyPrompt);
 
           partyTurn = false;
           whichPlayer=0;
           whichOpponent = 0;
-          partyTW.clear();
         }
-        
         //**** DONE CHECKING IF ANY PLAYERS HAVE DIED */
-
-        
-      }else{
+      }
+      else{
+        partyTW.clear();
+        checkDead(party, enemies);
         drawScreen(party, enemies);
-        //not the party turn!
-        //enemy attacks a randomly chosen person with a randomly chosen attack.z`
-        //Enemy action choices go here!
-        String pprompt = "press enter to see monster's turn";
-        drawText(pprompt,28,2);
         int randomP = (int)(Math.random()*party.size());
         int randomIndex = (int) (Math.random()*3);
         int randomEnemy = (int)(Math.random()*enemies.size());
-        if(!(enemies.get(randomEnemy).getHP()==0)){
-        if(!(party.get(randomP).getHP()==0)){ //??? assumes aliveness
         
         if(randomIndex==0) {
-          TextBox(7,42,38,5,enemies.get(randomEnemy).attack(party.get(randomP)));
+          enemyTW.add(enemies.get(randomEnemy).attack(party.get(randomP)));
         }
         else if(randomIndex==1) {
-            TextBox(7,42,38,5,enemies.get(randomEnemy).specialAttack(party.get(randomP)));
+          enemyTW.add(enemies.get(randomEnemy).specialAttack(party.get(randomP)));
         }
-        else if(randomIndex==2) {
+        else {
           int randomE = (int)(Math.random()*enemies.size());
           if(randomE == randomEnemy) {
-            TextBox(7,42,38,5,enemies.get(randomEnemy).support());
+            enemyTW.add(enemies.get(randomEnemy).support());
           }
-        else {
-          TextBox(7,42,38,5,enemies.get(randomEnemy).support(enemies.get(randomE)));
-        }
-
-        //Decide where to draw the following prompt:
-        String prompt = "enemy's turn: press enter to see next turn"; 
-        drawText(prompt,28,2);
-        whichOpponent++;
-
-      }//end of one enemy.
-    }
-    else {
-      for (int i = 0; i < party.size(); i++) {
-        if (party.get(i).getHP() > 0) {
-            randomP = i;
-            break;
-        }
-    }
-
-      if(randomIndex==0) {
-        TextBox(7,42,38,5,enemies.get(randomEnemy).attack(party.get(randomP)));
+          else {
+            enemyTW.add(enemies.get(randomEnemy).support(enemies.get(randomE)));
+          }
       }
-      else if(randomIndex==1) {
-          TextBox(7,42,38,5,enemies.get(randomEnemy).specialAttack(party.get(randomP)));
-      }
-      else if(randomIndex==2) {
-        int randomE = (int)(Math.random()*enemies.size());
-        if(randomE == randomEnemy) {
-          TextBox(7,42,38,5,enemies.get(randomEnemy).support());
-        }
-      else {
-        TextBox(7,42,38,5,enemies.get(randomEnemy).support(enemies.get(randomE))); 
-      }
-    }
-  }
-}
-else {
-  for (int i = 0; i < enemies.size(); i++) {
-    if (party.get(i).getHP() > 0) {
-        randomEnemy = i;
-        break;
-    }
-}
-if(!(party.get(randomP).getHP()==0)){
-  for (int i = 0; i < party.size(); i++) {
-    if (party.get(i).getHP() > 0) {
-        randomP = i;
-        break;
-    }
-  }
-}
+      whichOpponent++;
+      checkDead(party, enemies);
+      drawScreen(party, enemies);
+      String enemyPrompt = "enemy's turn: press enter to see next turn"; 
+      TextBox(28,2,70,1,enemyPrompt);
+      TextBoxR(7,42,37,13,enemyTW);
 
-if(randomIndex==0) {
-  TextBox(7,42,38,5,enemies.get(randomEnemy).attack(party.get(randomP)));
-}
-else if(randomIndex==1) {
-    TextBox(7,41,38,5,enemies.get(randomEnemy).specialAttack(party.get(randomP)));
-}
-else if(randomIndex==2) {
-  int randomE = (int)(Math.random()*enemies.size());
-  if(randomE == randomEnemy) {
-    TextBox(7,42,38,5,enemies.get(randomEnemy).support());
-  }
-else {
-  TextBox(7,42,38,5,enemies.get(randomEnemy).support(enemies.get(randomE))); 
-} 
-}
-String prompt = "enemy's turn: press enter to see next turn";
-        TextBox(28,2,78,5,prompt);
-}
-checkDead(party, enemies);
     if (party.isEmpty()) {
         drawText("Game Over! The enemies have won! Try again...", 28,2);
         quit();
@@ -470,8 +403,7 @@ checkDead(party, enemies);
         break;
     }
     }
-    
-    quit();
+  quit();
   }
 }
 }

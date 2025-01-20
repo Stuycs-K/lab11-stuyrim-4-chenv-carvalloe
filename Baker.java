@@ -81,7 +81,7 @@ public class Baker extends Adventurer{
     }
   }
     else{
-      return "Not enough leavener to roll away your foes! Instead "+attack(other);
+      return "Not enough leavener to roll away " + this + "'s foes! Instead "+attack(other);
     }
 
   }

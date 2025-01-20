@@ -1,6 +1,3 @@
-import java.util.Random;
-import java.util.Scanner;
-
 public class Charcutier extends Adventurer{
   int sausage, sausageMax;
 
@@ -106,7 +103,6 @@ public class Charcutier extends Adventurer{
   and z=random number from 1-5, x=(y)*(z/y+1),
   and integer division is used (up to maximums).*/
   public String support(Adventurer other){
-    Scanner scanner = new Scanner(System.in);
   int y = (int) (Math.random()*5)+1;
   int z = (int) (Math.random()*5)+1;
   int l = (z/y + 1);
