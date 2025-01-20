@@ -53,10 +53,10 @@ public class Boss extends Adventurer{
   }
 
   public String specialAttack(Adventurer other){
-    if(getSpecial() >= 20){
+    if(getSpecial() >= 12){
       other.setSpecial(0);
-      this.setSpecial(this.getSpecial() - 20);
-      return "IDIOT SANDWICH: " + this + " eliminated "+other.getSpecialName() + " of "+other + " and lost 20 " + this.getSpecialName();
+      this.setSpecial(this.getSpecial() - 12);
+      return "IDIOT SANDWICH: " + this + " eliminated "+other.getSpecialName() + " of "+other + " and lost 12 " + this.getSpecialName();
     }else{
       return "Not enough salt. Instead: "+attack(other);
     }
@@ -83,11 +83,11 @@ public class Boss extends Adventurer{
     {
       this.restoreSpecial(7);
       this.restoreHP(5);
-      return "MICHELIN STAR: celebrity loved your food and gifted you 7 salt and 5 HP points";
+      return "MICHELIN STAR: the celebrity loved your food! 7 salt and 5 HP points gifted";
     }
     else
     {
-      return "MICHELIN STAR REVOKED: celebrity hated your food and left no tip";
+      return "MICHELIN STAR REVOKED: the celebrity hated your food! no tip :(";
     }
   }
 }
