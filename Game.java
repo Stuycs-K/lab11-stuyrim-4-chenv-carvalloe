@@ -1,7 +1,5 @@
 import java.util.*;
-public class Game{//??? glitch where u go over HP for charcutier, check others,
-  //??? use methods from Adventurer as needed
-  //?????? MAJOR PROBLEM WITH OPPOSING SIDE'S NUMBER CHOSEN (THE 1-5)
+public class Game{
 
   public static void main(String[] args) {
     run();
@@ -88,7 +86,7 @@ public static void color(int m1, int m2, int m3, int m4){
         Text.go(25,j);
         System.out.print(Text.colorize("~",Text.BOLD,Text.RED+Text.BRIGHT));
       }
-      Text.go(31,1);
+      Text.go(32,1);
       System.out.println(" ");
         Text.reset();
     }
@@ -121,7 +119,7 @@ public static void color(int m1, int m2, int m3, int m4){
         System.out.print(" ");
       }
     }
-    go(row,col); //???? how to deal w indexing
+    go(row,col); 
     if(text.length() > width) {
       drawText(text.substring(0,width),row,col);
       TextBox(row+1,col,width,height-1,text.substring(width));
@@ -204,7 +202,7 @@ public static void color(int m1, int m2, int m3, int m4){
     drawBackground();
     //draw player party
     drawParty(party, 25,false);
-    drawParty(enemies,1,true); //check indexing?
+    drawParty(enemies,1,true);
     //draw enemy party
     
     drawText(Text.colorize("Party actions (party below)",Text.BOLD,Text.GREEN+Text.BRIGHT)
@@ -226,7 +224,7 @@ public static void color(int m1, int m2, int m3, int m4){
       addRow += m.length()/width;
     }
   }
-//??? add updating?
+  
   public static String userInput(Scanner in){
       //Move cursor to prompt location
       Text.go(31,1);
@@ -369,7 +367,7 @@ public static void color(int m1, int m2, int m3, int m4){
           }
           if(supportStringSplot.length >= 2) {
             int playerSupported = Integer.parseInt(supportStringSplot[1]);
-            if(playerSupported==whichPlayer) { //??? can i do this
+            if(playerSupported==whichPlayer) {
               partyTW.add(party.get(whichPlayer).support());
             }
             else if(playerSupported >= party.size() || playerSupported < 0) {
@@ -416,10 +414,6 @@ public static void color(int m1, int m2, int m3, int m4){
         //**** DONE CHECKING IF ANY PLAYERS HAVE DIED */
 
         if(whichPlayer >= party.size()){
-          //This is a player turn.
-          //Decide where to draw the following prompt:
-          //This is after the player's turn, and allows the user to see the enemy turn
-          //Decide where to draw the following prompt:
           String prompt = "press enter to see monster's turn";
           TextBox(26,2, 78, 2, prompt);
           partyTurn = false;
@@ -458,10 +452,6 @@ public static void color(int m1, int m2, int m3, int m4){
       }
       whichOpponent++;
       checkDead(party, enemies);
-      // drawScreen(party, enemies);
-      // String enemyPrompt = "enemy's turn: press enter to see next turn"; 
-      // TextBox(28,2,70,1,enemyPrompt);
-      // TextBoxR(7,42,37,13,enemyTW);
       System.out.flush();
 
     if (party.isEmpty()) {

@@ -103,7 +103,7 @@ public class Apprentice extends Adventurer{
     }
     else{
     setHP(getHP()+this.getHP());
-    return this+" STOCK RELIEF: " + this + "'s points is now set to "+this.getHP()+" HP!";
+    return "STOCK RELIEF: " + this + "'s points is now set to "+this.getHP()+" HP!";
   }
   }
 }

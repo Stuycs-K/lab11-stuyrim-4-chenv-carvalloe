@@ -1,8 +1,7 @@
 public class EndScreen {
-
-    
-                                                                       
+//CREDITS: https://www.fancytextpro.com/BigTextGenerator FOR THE FANCY TEXT 
     public static void drawWin() { 
+        
         String[] win = new String[]{
             "$$\\     $$\\                         $$\\      $$\\ $$\\           $$\\ ", 
             "\\$$\\   $$  |                        $$ | $\\  $$ |\\__|          $$ | ",
