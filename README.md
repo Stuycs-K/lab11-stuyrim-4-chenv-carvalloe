@@ -23,7 +23,7 @@ Make a clear list of features that work/dont work
 
 :white_check_mark: Player fields work as intended, and death occur once HP <= 0
 
-:white_check_mark: Program ends when the user choosed to quit, or all enemies is defeated, or the entire party is defeated.
+:white_check_mark: Program ends when the user choosed to quit, or party/enemies is/are defeated
 
 :white_check_mark: Displaying the results of the attack/special/support inside frame borders
 
@@ -33,15 +33,15 @@ Make a clear list of features that work/dont work
 
 :white_check_mark: Functional displays/game screen for optimal play
 
-:ballot_box_with_check: Updating screen for attack turns, with each party attack result displayed per input, and past several enemy attacks displayed per enemy turn cycle.
+:ballot_box_with_check: Updating screen for attack turns, with each party attack result displayed per input, and past several enemy attacks displayed per enemy turn cycle
 
 :ballot_box_with_check: Randomized adventurer opponent names + random identifier number (0-99) for each round (except boss)
 
-:ballot_box_with_check: Colorful and unique boundary and headers for game screen
+:ballot_box_with_check: Colorful and unique boundary for game screen
 
-:ballot_box_with_check: Colorful moves and headers displayed
+:ballot_box_with_check: Colorful headers for game screen
 
-:ballot_box_with_check: Win/Lose screens added once the game has ended.
+:ballot_box_with_check: Win/Lose screens added once the game has ended
 ## Adventurer Subclasses
 
 | Specifications | Apprentice Chef (modified from CodeWarrior) |   Baker  | Charcutier | Boss  |
