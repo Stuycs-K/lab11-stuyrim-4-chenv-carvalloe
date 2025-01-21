@@ -395,11 +395,13 @@ public static void color(int m1, int m2, int m3, int m4){
         //**** CHECKING IF ANY PLAYERS HAVE DIED */
       if (party.isEmpty()) {
           drawText("Game Over! The enemies have won! Try again...", 28,2);
+          EndScreen.drawLoss();
           quit();
           break;
       } 
       else if (enemies.isEmpty()) {
           drawText("Congratulations! You have defeated all enemies!", 28,2);
+          EndScreen.drawWin();
           quit();
           break;
       }
@@ -464,11 +466,13 @@ public static void color(int m1, int m2, int m3, int m4){
 
     if (party.isEmpty()) {
         drawText("Game Over! The enemies have won! Try again...", 28,2);
+        EndScreen.drawLoss();
         quit();
         break;
     }
     else if (enemies.isEmpty()) {
         drawText("Congratulations! You have defeated all enemies!", 28,2);
+        EndScreen.drawWin();
         quit();
         break;
     }

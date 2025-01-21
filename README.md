@@ -23,25 +23,23 @@ Make a clear list of features that work/dont work
 
 :white_check_mark: Player fields work as intended, and death occur once HP <= 0
 
-:question: Program ends when the user choosed to quit, or all enemies is defeated, or the entire party is defeated. (win/lose screen to be added)
+:white_check_mark: Program ends when the user choosed to quit, or all enemies is defeated, or the entire party is defeated. (win/lose screen to be added)
 
-:question: Displaying the results of the attack/special/support inside frame borders
+:white_check_mark: Displaying the results of the attack/special/support inside frame borders
 
 :white_check_mark: Using attack/special operations on your opponents
 
 :white_check_mark: Using support operations on your team
 
-:question: Functional displays/game screen for optimal play
+:white_check_mark: Functional displays/game screen for optimal play
 
-:question: Updating screen for every attack turn
+:white_check_mark: Updating screen for every attack turn, with each party attack result displayed per input, and all enemy attacks displayed per turn cycle.
 
 :ballot_box_with_check: Randomized adventurer opponent names + random identifier number (0-99) for each round (except boss)
 
 :ballot_box_with_check: Colorful and unique boundary and headers for game screen
 
 :ballot_box_with_check: Death messages pop up in respective action columns once party member/enemy dies in a turn cycle.
-
-:ballot_box_with_check: Previous actions in one turn cycle displayed.
 ## Adventurer Subclasses
 
 | Specifications | Apprentice Chef (modified from CodeWarrior) |   Baker  | Charcutier | Boss  |

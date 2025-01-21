@@ -88,7 +88,7 @@ public class Baker extends Adventurer{
   // figured it out will continue working on it
   public String support(Adventurer other){
     other.changeSupported();
-    return "SHORTCAKE SHIELD: " + this + " Blocked 50% of damage to "+other+" for next two turns";
+    return "SHORTCAKE SHIELD: " + this + " blocked 50% of damage to "+other+" for next two turns";
   }
 
   public String support(){
